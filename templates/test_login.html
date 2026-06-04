@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>
+        Test Login
+    </title>
+
+</head>
+
+<body>
+
+    <h1>
+        Test OTP Login
+    </h1>
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+        <input
+            type="text"
+            name="contact_number"
+            placeholder="Enter Mobile Number"
+        >
+
+        <br><br>
+
+        <button type="submit">
+
+            Send OTP
+
+        </button>
+
+    </form>
+
+</body>
+
+</html>

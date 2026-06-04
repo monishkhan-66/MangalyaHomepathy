@@ -1,0 +1,200 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Our Treatments{% endblock title %}
+
+{% block content2 %}
+
+ <div class="container py-4">
+        <div class="row align-items-center">
+            <!-- Left Section -->
+            <div class="col-md-6 text-center text-md-start">
+                <h2 class="fs-1">We Offer</h2>
+                <h3 style="color: #2c447c;">Personalized & Effective Homeopathic Treatments</h3>
+                <p class="text-muted mt-3">
+                   At Manglaya Homeopathy, we specialize in natural, holistic treatments designed to address the root cause of health issues. Our individualized approach considers your unique health profile, ensuring safe, effective, and long-lasting recovery.
+                    <ul type="none">
+                        <li>✔ Evidence-based homeopathy for chronic & acute conditions</li>
+                         <li>✔ atural remedies with no side effects</li>
+                         <li>✔ Customized treatment plans for complete well-being</li>
+                    </ul>
+
+Experience gentle yet powerful healing with our expert homeopathic care.
+                </p>
+            </div>
+
+            <!-- Right Section -->
+            <div class="col-md-6">
+                <div class="row g-4">
+                     <div class="col-6 col-md-4">
+                        <div class="treatment-card">
+                            <i class="fas fa-user-md icon"></i>
+                            <p class="mt-2 fw-semibold">Skin & Hair</p>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4">
+                        <div class="treatment-card">
+                            <i class="fas fa-lungs icon"></i>
+                            <p class="mt-2 fw-semibold">Asthma</p>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4">
+                        <div class="treatment-card">
+                             <i class="fas fa-ribbon icon"></i>
+                            <p class="mt-2 fw-semibold">Thyroid</p>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4">
+                        <div class="treatment-card">
+                           <i class="fas fa-gem icon"></i>
+                            <p class="mt-2 fw-semibold">Kidney Stone</p>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4">
+                        <div class="treatment-card">
+                            <i class="fas fa-syringe icon"></i>
+                            <p class="mt-2 fw-semibold">Diabetes</p>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4">
+                        <div class="treatment-card">
+                            <i class="fas fa-stomach icon"></i>
+                            <p class="mt-2 fw-semibold">Gastrointestinal Disorder</p>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4">
+                        <div class="treatment-card">
+                            <i class="fas fa-bone icon"></i>
+                            <p class="mt-2 fw-semibold">Bone & Joint Disorder</p>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4">
+                        <div class="treatment-card">
+                            <i class="fas fa-venus-mars icon"></i>
+                            <p class="mt-2 fw-semibold">Hormonal Disorder</p>
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Result Section -->
+        <div class="row mt-5">
+            <div class="col-12 text-center">
+                <h2 class="fs-2">Proven Results</h2>
+                <p class="text-muted mt-3">
+                    Our homeopathic treatments have successfully helped countless individuals regain their health and live a pain-free life. Here's what some of our patients have experienced:
+                </p>
+            </div>
+
+            <!-- Result Card 1: Skin Health -->
+            <div class="col-md-6 col-lg-3">
+              <div class="before-after-card text-center position-relative">
+
+                <!-- Images Side by Side -->
+                <div class="row no-gutters align-items-center mb-3">
+                  <div class="col-6">
+                    <img src="{% static 'images/before11.jpg' %}" alt="Before" class="img-fluid rounded-start">
+                  </div>
+                  <div class="col-6">
+                    <img src="{% static 'images/after11.jpg' %}" alt="After" class="img-fluid rounded-end">
+                  </div>
+                </div>
+
+                <!-- Elliptical Label Below Images -->
+                <div class="ellipse-label mx-auto mb-3">
+                  <span class="label-text">Before | After</span>
+                </div>
+
+                <!-- Description -->
+                <p class="text-muted">Patients have experienced significant improvements with our personalized treatments.</p>
+              </div>
+            </div>
+
+
+
+            <!-- Result Card 2: Asthma -->
+            <div class="col-md-6 col-lg-3">
+              <div class="before-after-card text-center position-relative">
+
+                <!-- Images Side by Side -->
+                <div class="row no-gutters align-items-center mb-3">
+                  <div class="col-6">
+                    <img src="{% static 'images/r3.jpeg' %}" alt="Before" class="img-fluid rounded-start">
+                  </div>
+                  <div class="col-6">
+                    <img src="{% static 'images/r3f.jpeg' %}" alt="After" class="img-fluid rounded-end">
+                  </div>
+                </div>
+
+                <!-- Elliptical Label Below Images -->
+                <div class="ellipse-label mx-auto mb-3">
+                  <span class="label-text">Before | After</span>
+                </div>
+
+                <!-- Description -->
+                <p class="text-muted">Patients have experienced significant improvements with our personalized treatments.</p>
+              </div>
+            </div>
+
+
+            <!-- Result Card 3: Thyroid Balance -->
+            <div class="col-md-6 col-lg-3">
+              <div class="before-after-card text-center position-relative">
+
+                <!-- Images Side by Side -->
+                <div class="row no-gutters align-items-center mb-3">
+                  <div class="col-6">
+                    <img src="{% static 'images/r4.jpeg' %}" alt="Before" class="img-fluid rounded-start">
+                  </div>
+                  <div class="col-6">
+                    <img src="{% static 'images/r4f.jpeg' %}" alt="After" class="img-fluid rounded-end">
+                  </div>
+                </div>
+
+                <!-- Elliptical Label Below Images -->
+                <div class="ellipse-label mx-auto mb-3">
+                  <span class="label-text">Before | After</span>
+                </div>
+
+                <!-- Description -->
+                <p class="text-muted">Patients have experienced significant improvements with our personalized treatments.</p>
+              </div>
+            </div>
+
+
+            <!--result 4-->
+            <div class="col-md-6 col-lg-3">
+              <div class="before-after-card text-center position-relative">
+
+                <!-- Images Side by Side -->
+                <div class="row no-gutters align-items-center mb-3">
+                  <div class="col-6">
+                    <img src="{% static 'images/r5.jpeg' %}" alt="Before" class="img-fluid rounded-start">
+                  </div>
+                  <div class="col-6">
+                    <img src="{% static 'images/r5f.jpeg' %}" alt="After" class="img-fluid rounded-end">
+                  </div>
+                </div>
+
+                <!-- Elliptical Label Below Images -->
+                <div class="ellipse-label mx-auto mb-3">
+                  <span class="label-text">Before | After</span>
+                </div>
+
+                <!-- Description -->
+                <p class="text-muted">Patients have experienced significant improvements with our personalized treatments.</p>
+              </div>
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock content2 %}
+
+

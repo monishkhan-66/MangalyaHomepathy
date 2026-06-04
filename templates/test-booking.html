@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>
+        Test Appointment Booking
+    </title>
+
+</head>
+
+<body>
+
+    <h1>
+        Book Appointment
+    </h1>
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+        <label>
+            Contact Number
+        </label>
+
+        <br>
+
+        <input
+            type="text"
+            name="contact_number"
+            placeholder="Enter Contact Number"
+        >
+
+        <br><br>
+
+        <label>
+            First Name
+        </label>
+
+        <br>
+
+        <input
+            type="text"
+            name="first_name"
+            placeholder="First Name"
+        >
+
+        <br><br>
+
+        <label>
+            Last Name
+        </label>
+
+        <br>
+
+        <input
+            type="text"
+            name="last_name"
+            placeholder="Last Name"
+        >
+
+        <br><br>
+
+        <label>
+            DOB
+        </label>
+
+        <br>
+
+        <input
+            type="date"
+            name="dob"
+        >
+
+        <br><br>
+
+        <label>
+            Gender
+        </label>
+
+        <br>
+
+        <select name="gender">
+
+            <option value="Male">
+                Male
+            </option>
+
+            <option value="Female">
+                Female
+            </option>
+
+        </select>
+
+        <br><br>
+
+        <label>
+            Email
+        </label>
+
+        <br>
+
+        <input
+            type="email"
+            name="email"
+            placeholder="Email"
+        >
+
+        <br><br>
+
+        <label>
+            Disease
+        </label>
+
+        <br>
+
+        <input
+            type="text"
+            name="disease"
+            placeholder="Disease"
+        >
+
+        <br><br>
+
+        <label>
+            Appointment Date
+        </label>
+
+        <br>
+
+        <input
+            type="date"
+            name="appointment_date"
+        >
+
+        <br><br>
+
+        <label>
+            Appointment Time
+        </label>
+
+        <br>
+
+        <input
+            type="time"
+            name="appointment_time"
+        >
+
+        <br><br>
+
+        <button type="submit">
+
+            Book Appointment
+
+        </button>
+
+    </form>
+
+</body>
+
+</html>

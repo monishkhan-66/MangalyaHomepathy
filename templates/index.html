@@ -1,0 +1,707 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Best Homeopathy Doctor in Nalasopara West | Mangalya Homeopathy Clinic – Dr. Sanchit Ranade{% endblock title %}
+
+
+
+
+{% block content1 %}
+
+<style>
+.vertical-button {
+    position: fixed;
+    top: 40%;
+    left: 0;
+    background-color: #0b98b2;
+    color: white;
+    padding: 10px 5px;
+    z-index: 9999;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    box-shadow:5px 5px 5px grey;
+
+}
+.vertical-text {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+}
+
+#overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 2000;
+  }
+
+  .sidebar {
+    width: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: #fff;
+    overflow-x: hidden;
+    transition: width 0.3s ease;
+    z-index: 2001;
+    padding: 30px;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.2);
+    display: none;
+  }
+
+  .sidebar.open {
+    width: 50%;
+    display: block;
+  }
+
+  @media (max-width: 768px) {
+    .sidebar.open {
+      width: 100%;
+    }
+
+        .doctor-title h1 {
+          text-align: center;
+          padding:20px 10px;
+
+        }
+
+
+  }
+
+  .closebtn {
+
+    top: 10px;
+    right: 20px;
+    font-size: 30px;
+    cursor: pointer;
+    display: none;
+    z-index: 2002;
+  position: absolute;
+  }
+
+  .sidebar.open .closebtn {
+    display: block;
+  }
+
+
+
+.google-rating {
+  display: inline-flex;
+  align-items: center;
+  background: #fff;
+  border-radius: 30px;
+  padding: 6px 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: all 0.2s ease;
+}
+
+.google-rating:hover {
+  transform: scale(1.03);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+
+.doctor-title {
+  width: 100%;
+  text-align: left;
+
+}
+
+.gold-text {
+  font-size: clamp(0.9rem, 2vw, 1.2rem);
+  color: #c9a23f; /* gold shade */
+  font-weight: 700;
+  margin-top: 4px;
+}
+
+
+/* =============================
+   ACHIEVEMENT SECTION (FINAL)
+============================= */
+
+.achievement-wrapper {
+  display: flex;
+  gap: 18px;
+  margin: 25px 0;
+  flex-wrap: wrap;
+}
+
+/* CARD */
+.achievement-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #ffffff;
+  padding: 12px 16px;
+  border-radius: 14px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+  min-width: 180px;
+  transition: all 0.3s ease;
+}
+
+.achievement-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 22px rgba(0,0,0,0.12);
+}
+
+/* ICON */
+.icon-box {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+/* COLORS */
+.icon-box.star {
+  background: #fff4cc;
+  color: #fbbc04;
+}
+
+.icon-box.medal {
+  background: #fde8c8;
+  color: #c9a23f;
+}
+
+.icon-box.user {
+  background: #e6f7f8;
+  color: #0b98b2;
+}
+
+/* TEXT */
+.label {
+  margin: 0;
+  font-size: 13px;
+  color: #6c757d;
+}
+
+.achievement-card h4 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  color: #0c1757;
+}
+
+
+/* =============================
+   MOBILE OPTIMIZATION
+============================= */
+
+@media (max-width: 768px) {
+
+  .achievement-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* 🔥 2 cards per row */
+    gap: 12px;
+    justify-content: center;
+  }
+
+  .achievement-card {
+    width: 100%;
+    padding: 10px 12px;
+    gap: 8px;
+    border-radius: 12px;
+  }
+
+  .icon-box {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+  }
+
+  .label {
+    font-size: 11px;
+  }
+
+  .achievement-card h4 {
+    font-size: 13px;
+  }
+}
+
+
+/*-----------------------------*/
+
+
+/* WRAPPER */
+.cta-wrapper {
+  display: flex;
+  gap: 18px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+/* BASE BUTTON */
+.cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 26px;
+  border-radius: 50px; /* pill shape */
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+/* ICON */
+.cta-btn i {
+  font-size: 16px;
+}
+
+/* CALL BUTTON (OUTLINE) */
+.call-btn {
+  border: 2px solid #0b98b2;
+  color: #0b98b2;
+  background: transparent;
+}
+
+.call-btn:hover {
+  background: #0b98b2;
+  color: #ffffff;
+  box-shadow: 0 6px 18px rgba(11, 152, 178, 0.3);
+}
+
+/* BOOK BUTTON (GRADIENT) */
+.book-btn {
+  background: linear-gradient(135deg, #0b98b2, #0c1757);
+  color: #ffffff;
+  border: none;
+  box-shadow: 0 6px 20px rgba(12, 23, 87, 0.25);
+}
+
+.book-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(12, 23, 87, 0.35);
+}
+
+.cta-btn {
+  backdrop-filter: blur(8px);
+}
+@media (max-width: 768px) {
+  .cta-wrapper {
+    justify-content: center;
+  }
+
+  .cta-btn {
+    width: 80%;
+    justify-content: center;
+  }
+}
+
+</style>
+
+
+
+
+<div class="container-fluid hero-section ">
+
+
+        <!--   <div class="vertical-button" id="toggleSidebarBtn" onclick="openSidebar()">-->
+        <!--        <a href="javascript:void(0);" class="vertical-text nav-link">Google Reviews</a>-->
+        <!--    </div>-->
+
+
+        <!--    <div id="overlay" onclick="closeSidebar()"></div>-->
+
+
+        <!--<div id="mySidebar" class="sidebar">-->
+        <!--  <span class="closebtn" onclick="closeSidebar()">&times;</span>-->
+        <!--  <div class="mt-4">-->
+        <!--     <script defer async src="https://cdn.trustindex.io/loader.js?010cab749aa2493a9876234e4b8"></script>-->
+        <!--  </div>-->
+        <!--</div>-->
+
+
+
+
+
+
+<!--<h1 class="test">Hello World</h1>-->
+
+  <div class="hero-content ">
+
+
+          <!-- ⭐ Google Rating Badge -->
+      <!--<div class="m-0">-->
+      <!--  <a href="https://www.google.com/search?sca_esv=6ddd0cbd40df43d1&rlz=1C1RXQR_en-GBIN1073IN1073&sxsrf=AE3TifNBLim1J8fB0Zf7m5DbR9UA9EHs0g:1761566426902&si=AMgyJEtREmoPL4P1I5IDCfuA8gybfVI2d5Uj7QMwYCZHKDZ-EwdQcHhh54SQeD9aFi6BKqER1PmGhvvJ0k3NHTLY1H7W9PnK4_e4DAexX9mNOHOJSQwpXN4ds4RV2A11vl1ZB_ZQ-tNlX6UrDniEOCzjDPhcRs_R5Vp-f-tEl3Q5DgpRlb7qBB8%3D&q=Mangalya+Homeopathy+Clinic,+Nallasopara+West+Reviews&sa=X&ved=2ahUKEwiNxf6oqsSQAxXn1zgGHS9ZKGAQ0bkNegQIKhAE&biw=1280&bih=551&dpr=1.5"-->
+      <!--     target="_blank"-->
+      <!--     rel="noopener"-->
+      <!--     class="d-inline-flex align-items-center text-decoration-none">-->
+      <!--    <img src="{% static 'images/google-icon.png' %}"-->
+      <!--         alt="Google icon"-->
+      <!--         width="80"-->
+      <!--         height="auto"-->
+      <!--         class="me-2">-->
+      <!--    <span class="fw-semibold text-dark" style="font-size:20px">-->
+      <!--      <span style="color:#fbbc04;font-size:20px">★</span> 4.9-->
+      <!--    </span>-->
+      <!--  </a>-->
+      <!--</div>-->
+
+    <div class="doctor-title">
+          <h1 class="fw-bold" style="font-size: clamp(1.5rem, 3vw, 3rem); margin-bottom: 0;">
+            Dr. Sanchit Ranade Trusted Homeopathy Doctor in Nalasopara
+          </h1>
+         <!-- <p class="gold-text text-center">-->
+         <!--     <i class="fa-solid fa-medal" style="color:#c9a23f; margin-right:6px;"></i>-->
+         <!--     Gold Medalist-->
+         <!--</p>-->
+    </div>
+
+    <!--<p class="fw-semibold" style="font-size: clamp(1rem, 2.5vw, 1.8rem);">-->
+    <!--  Empowering Health Through <br>-->
+    <!--  <span style="color: #2cbcac;">Homeopathy</span>-->
+    <!--</p>-->
+    <p style="font-size: clamp(0.8rem, 2.5vw, 1rem);">
+      We provide homeopathy treatment for skin, hair, PCOD, thyroid, and chronic diseases with a focus on natural healing.
+    </p>
+
+
+
+
+    <div class="achievement-wrapper">
+
+  <!-- Rating -->
+  <div class="achievement-card">
+    <div class="icon-box star">
+      <i class="fas fa-star"></i>
+    </div>
+    <div>
+      <p class="label">Rating</p>
+      <h4>4.9 Google</h4>
+    </div>
+  </div>
+
+  <!-- Achievement -->
+  <div class="achievement-card">
+    <div class="icon-box medal">
+      <i class="fas fa-medal"></i>
+    </div>
+    <div>
+      <p class="label">Achievement</p>
+      <h4>Gold Medalist</h4>
+    </div>
+  </div>
+
+
+
+</div>
+    <!--<a class="btn custom-btn book-btn" href="{% url 'book_appointment' %}">Book Appointment</a>-->
+
+    <div class="cta-wrapper">
+
+          <a href="tel:+917020724751" class="cta-btn call-btn">
+            <i class="fas fa-phone"></i>
+            <span>Call Now</span>
+          </a>
+
+          <a href="{% url 'book_appointment' %}" class="cta-btn book-btn">
+            <i class="fas fa-calendar-check"></i>
+            <span>Book Appointment</span>
+          </a>
+
+    </div>
+
+
+
+
+  </div>
+
+  <div class="hero-image ">
+    <img src="{% static 'images/dr-sanchit web.webp' %}" alt="Mangalya Homeopathy Clinic">
+  </div>
+</div>
+
+{% endblock content1 %}
+
+
+{% block content2 %}
+
+<!-- Statistics Section -->
+<div class="container my-5 text-center  ">
+  <div class="row statics rounded-3">
+      <div class="col-md-4 stat-box">
+          <i class="fas fa-user-check fa-2x mb-2" style="color: #2cbcac"></i>
+          <h2 class="counter" data-target="50000">0</h2>
+          <p>Patients Treated</p>
+      </div>
+      <div class="col-md-4 stat-box">
+          <i class="fas fa-stethoscope fa-2x mb-2" style="color: #2cbcac"></i>
+          <h2 class="counter" data-target="20000">0</h2>
+          <p> Women Patients Treated</p>
+      </div>
+      <div class="col-md-4 stat-box">
+          <i class="fas fa-calendar-check fa-2x mb-2" style="color: #2cbcac"></i>
+          <h2 class="counter" data-target="5">0</h2>
+          <p>Years of Experience</p>
+      </div>
+  </div>
+</div>
+
+
+
+
+
+
+<div class="container-fluid my-5">
+  <div class="row align-items-center">
+
+    <!-- Image -->
+    <div class="col-lg-6 col-md-12 p-2">
+      <img src="{% static 'images/dr-sanchit-ranade-web.webp' %}"
+           alt="Dr. Sanchit Ranade Homeopathy Doctor Nalasopara"
+           class="img-fluid rounded" style="width:100%">
+    </div>
+
+    <!-- Content -->
+    <div class="col-lg-6 col-md-12">
+
+      <h2 style="color: #2c447c;">
+        About Dr. Sanchit Ranade
+      </h2>
+
+      <p class="text-secondary" style="line-height: 1.8;">
+        I am <strong>Dr. Sanchit Uddavesh Ranade</strong>, a homeopathy doctor in Nalasopara dedicated to providing safe, natural, and holistic healthcare. My approach focuses on treating the root cause of diseases rather than just managing symptoms.
+      </p>
+
+      <p class="text-secondary" style="line-height: 1.8;">
+        With experience in classical homeopathy and a modern understanding of health conditions, I specialize in treating chronic problems such as skin diseases, hair fall, PCOD, thyroid disorders, allergies, and lifestyle-related conditions.
+      </p>
+
+      <p class="text-secondary" style="line-height: 1.8;">
+        Every patient receives personalized attention and a customized treatment plan to ensure long-term wellness and sustainable healing.
+      </p>
+
+      <!-- Trust -->
+      <ul style="line-height: 1.8;">
+        <li> Gold Medalist in Homeopathy</li>
+        <li> 4.9 Google Rating</li>
+        <li> 50000+ Patients Treated</li>
+      </ul>
+
+    </div>
+
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+<!-- About Mangalya Homeopathy Clinic Section -->
+<!-- About Mangalya Homeopathy Clinic Section -->
+<section class="container my-5">
+
+  <div class="row align-items-center">
+
+    <!-- Left Column -->
+    <div class="col-lg-6">
+
+      <h2 style="color: #2c447c;">
+        About Mangalya Homeopathy Clinic in Nalasopara
+      </h2>
+
+      <hr style="width: 60px; height: 4px; background-color: #2cbcac; border: none; margin: 10px 0;">
+
+      <p class="text-secondary" style="line-height: 1.8;">
+        <strong>Mangalya Homeopathy Clinic</strong> is a trusted homeopathy clinic in Nalasopara offering safe, natural, and effective treatment for a wide range of acute and chronic health conditions. We specialize in holistic healing by addressing the root cause of diseases rather than just symptoms.
+      </p>
+
+      <p class="text-secondary" style="line-height: 1.8;">
+        Our clinic provides personalized homeopathic treatment for conditions such as skin problems, hair fall, PCOD, thyroid disorders, allergies, and lifestyle diseases. With a patient-centric approach, we focus on long-term wellness and overall health improvement.
+      </p>
+
+      <p class="text-secondary" style="line-height: 1.8;">
+        If you are looking for the best homeopathy doctor in Nalasopara, Mangalya Homeopathy Clinic offers expert care, natural healing, and trusted treatment solutions.
+      </p>
+
+    </div>
+
+    <!-- Right Column -->
+    <div class="col-lg-6 mb-4 mb-lg-0">
+      <div class="row g-2">
+
+        <div class="col-6">
+          <img src="{% static 'images/clinic1.jpg' %}"
+               alt="Homeopathy clinic interior in Nalasopara"
+               class="img-fluid rounded shadow-sm">
+        </div>
+
+        <div class="col-6">
+          <img src="{% static 'images/clinic2.jpg' %}"
+               alt="Homeopathy treatment room Nalasopara clinic"
+               class="img-fluid rounded shadow-sm">
+        </div>
+
+        <div class="col-12">
+          <video class="img-fluid rounded shadow-sm" autoplay loop muted playsinline>
+            <source src="{% static 'images/video3.mp4' %}" type="video/mp4">
+          </video>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+
+<div class="container my-5">
+  <h2 class="text-center mb-4">Our Vision, Mission & Core Values</h2>
+
+  <div class="row text-center">
+    <!-- Vision Section -->
+    <div class="col-md-4">
+      <i class="fas fa-eye fa-3x" style="color: #2c447c"></i>
+      <h3>Vision</h3>
+      <p>Holistic Wellness, Naturally</p>
+    </div>
+
+    <!-- Mission Section -->
+    <div class="col-md-4">
+      <i class="fas fa-hand-holding-heart fa-3x" style="color:#2cbcac"></i>
+      <h3>Mission</h3>
+      <p>Integrated Approach to Wellness</p>
+    </div>
+
+    <!-- Core Values Section -->
+    <div class="col-md-4">
+      <i class="fas fa-gavel fa-3x" style="color:#2c447c"></i>
+      <h3>Core Values</h3>
+      <p>Passion to Treat Patients Ethically</p>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<div class="container my-5">
+  <h2 class="text-center mb-4">What Our Patients Say</h2>
+
+  <div class="row d-flex justify-content-center ">
+
+
+      <div id="shapo-widget-e53507d852b5c2811f05"></div>
+<script id="shapo-embed-js" type="text/javascript" src="https://cdn.shapo.io/js/embed.js" defer></script>
+
+
+    <!-- Review 1 -->
+    <!--<div class="col-md-6 col-lg-3 mb-4 text-white">-->
+    <!--  <div class="card border-0 shadow-lg h-100 text-white" style="background-color:#2c447c">-->
+    <!--    <div class="card-body">-->
+    <!--      <p class="text-secondary mb-3 text-white">-->
+    <!--        <i class="fas fa-quote-left me-2 "></i>-->
+    <!--       <span>{{" Dr. Sanchit provides good information and makes us understand about the problem and helps cure it in an easy effective homeopathic medicine.I have personally consulted him and got excellent results in a week . Thankyou Dr.Sanchit "| truncatechars:250 }}</span>-->
+    <!--        <i class="fas fa-quote-right ms-2"></i>-->
+    <!--      </p>-->
+    <!--      <div class="d-flex align-items-center mt-4">-->
+    <!--        <img src="https://static.vecteezy.com/system/resources/previews/000/439/863/non_2x/vector-users-icon.jpg" alt="User 1" class="rounded-circle me-3" style="width: 50px; height: 50px;">-->
+    <!--        <div>-->
+    <!--          <h6 class="mb-0">Shraddha Wadekar</h6>-->
+    <!--          <small class=" text-white">Patient</small>-->
+    <!--        </div>-->
+    <!--      </div>-->
+    <!--    </div>-->
+    <!--  </div>-->
+    <!--</div>-->
+
+    <!-- Review 2 -->
+    <!--<div class="col-md-6 col-lg-3 mb-4">-->
+    <!--  <div class="card border-0 shadow-lg h-100">-->
+    <!--    <div class="card-body">-->
+    <!--      <p class="text-secondary mb-3">-->
+    <!--        <i class="fas fa-quote-left me-2"></i>-->
+    <!--        <span>{{" Dr. Sanchit Ranade has been amazing in treating my condition. He takes the time to understand the issue deeply and provides personalized care. I’ve seen great improvements since starting treatment. Dr. Ranade is attentive, professional, and always available for follow-ups. Highly recommend!"| truncatechars:250 }}</span-->
+    <!--        <i class="fas fa-quote-right ms-2"></i>-->
+    <!--      </p>-->
+    <!--      <div class="d-flex align-items-center mt-4">-->
+    <!--        <img src="https://static.vecteezy.com/system/resources/previews/000/439/863/non_2x/vector-users-icon.jpg" alt="User 2" class="rounded-circle me-3" style="width: 50px; height: 50px;">-->
+    <!--        <div>-->
+    <!--          <h6 class="mb-0">Shaila Chandiwade</h6>-->
+    <!--          <small class="text-muted">Patient</small>-->
+    <!--        </div>-->
+    <!--      </div>-->
+    <!--    </div>-->
+    <!--  </div>-->
+    <!--</div>-->
+
+    <!-- Review 3 -->
+    <!--<div class="col-md-6 col-lg-3 mb-4 text-white">-->
+    <!--  <div class="card border-0 shadow-lg h-100 text-white" style="background-color:#2c447c">-->
+    <!--    <div class="card-body">-->
+    <!--      <p class="text-secondary mb-3 text-white">-->
+    <!--        <i class="fas fa-quote-left me-2 "></i>-->
+    <!--        <span>{{"I mr.varun walavalkar regular patient have benefited from the medicine as per my personal experience my brother was diagnosed with brain tumor so after operation there was lot of complications so I suggested to doctor sanchit regarding my brother problem.So from the day we have started his medicines a lot of improvement has been seen in my brother . Doctor sanchit is also very cooperative."| truncatechars:250 }}</span-->
+    <!--        <i class="fas fa-quote-right ms-2"></i>-->
+    <!--      </p>-->
+    <!--      <div class="d-flex align-items-center mt-4">-->
+    <!--        <img src="https://static.vecteezy.com/system/resources/previews/000/439/863/non_2x/vector-users-icon.jpg" alt="User 1" class="rounded-circle me-3" style="width: 50px; height: 50px;">-->
+    <!--        <div>-->
+    <!--          <h6 class="mb-0">Varun Walavalkar</h6>-->
+    <!--          <small class="text-white">Patient</small>-->
+    <!--        </div>-->
+    <!--      </div>-->
+    <!--    </div>-->
+    <!--  </div>-->
+    <!--</div>-->
+
+    <!-- Review 4 -->
+    <!--<div class="col-md-6 col-lg-3 mb-4">-->
+    <!--  <div class="card border-0 shadow-lg h-100">-->
+    <!--    <div class="card-body">-->
+    <!--      <p class="text-secondary mb-3">-->
+    <!--        <i class="fas fa-quote-left me-2"></i>-->
+    <!--        <span>{{" I had a great experience with Dr.Sanchit Ranade. They were attentive explained everything clearly and made me feel comfortable throughout my visit. I would highly recommend Dr. Sanchit Ranade to anyone seeking a trusted professional."| truncatechars:250 }}</span-->
+    <!--        <i class="fas fa-quote-right ms-2"></i>-->
+    <!--      </p>-->
+    <!--      <div class="d-flex align-items-center mt-4">-->
+    <!--        <img src="https://static.vecteezy.com/system/resources/previews/000/439/863/non_2x/vector-users-icon.jpg" alt="User 4" class="rounded-circle me-3" style="width: 50px; height: 50px;">-->
+    <!--        <div>-->
+    <!--          <h6 class="mb-0">Rashi Walinjkar</h6>-->
+    <!--          <small class="text-muted">Patient</small>-->
+    <!--        </div>-->
+    <!--      </div>-->
+    <!--    </div>-->
+    <!--  </div>-->
+    <!--</div>-->
+
+
+
+<!-- Google Reviews Toggle Button -->
+<!--<div class="text-center my-5">-->
+<!--  <button class="btn btn-outline-info" onclick="toggleReviews()">Show Google Reviews</button>-->
+<!--</div>-->
+
+<!-- Google Reviews Section (Hidden by Default) -->
+<!--<div id="google-reviews-container" class="container my-4 d-none">-->
+  <!-- Elfsight Widget -->
+<!--  <script src="https://static.elfsight.com/platform/platform.js" async></script>-->
+<!--  <div class="elfsight-app-8033201d-5d74-4251-935d-f891030ce113" data-elfsight-app-lazy></div>-->
+<!--</div>-->
+
+
+  </div>
+
+</div>
+
+
+
+
+
+
+
+{% endblock content2 %}

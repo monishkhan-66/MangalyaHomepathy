@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content1 %}{% endblock content1 %}
+{% block header %}{% endblock header %}
+
+{% block content2 %}
+<div class="container-fluid p-0" style="min-height: 100vh;">
+    <div class="row no-gutters h-100">
+        <!-- Left Column (4 col) -->
+        <div class="col-md-4 d-none d-md-block h-100" style="background-color: #1a2f56; color: white; position: fixed; top: 0; bottom: 0;">
+            <div class="text-center" style="position: absolute; top: 50%; transform: translateY(-50%); width: 100%;">
+                <h5 class="fw-bold mb-4">Verify Your Identity</h5>
+                <p class="text-muted">Enter the 6-digit verification code sent to your email.</p>
+                <img src="{% static 'images/logo.png' %}" alt="Phone Verification" style="width: 80px;">
+            </div>
+        </div>
+
+        <!-- Right Column (8 col) -->
+        <div class="col-md-8 offset-md-4" style="overflow-y: auto; height: 100vh;">
+            <div class="card p-4 border-0" style="margin-top: 100px; border-radius: 12px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);">
+                <h5 class="text-center mb-2" style="color: #1a2f56; font-weight: bold;">Verify Your OTP</h5>
+                <p class="text-center" style="color: #6a6a8e; font-size: 0.9rem;">
+                    Enter the 6-digit verification code we sent to your entered email.
+                </p>
+
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="mb-2 text-center">
+                        <input
+                            type="text"
+                            class="form-control text-center"
+                            id="otp"
+                            name="otp"
+                            placeholder="Enter OTP"
+                            required
+                            maxlength="6"
+                            style="font-size: 1.2rem; letter-spacing: 0.3rem; padding: 8px; border-radius: 6px; border: 1px solid #dcdcf8; background-color: #ffffff;">
+                    </div>
+
+                    {% if otp_error %}
+                        <div class="alert alert-danger text-center" style="background-color: #ffe5e5; color: #ff3333; font-size: 0.8rem;">
+                            <strong>Invalid OTP, please try again!</strong>
+                        </div>
+                    {% endif %}
+
+                    {% if slot_error %}
+                        <div class="alert alert-danger text-center" style="background-color: #fff3cd; color: #856404; font-size: 0.85rem;">
+                            <strong>{{ slot_error }}</strong>
+                        </div>
+                    {% endif %}
+
+                    <div class="mb-2 text-center">
+                        <button
+                            type="submit"
+                            class="btn"
+                            style="border-radius: 20px; padding: 8px 20px; font-size: 1rem; color: #ffffff; background-color: #1a2f56; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); border: none;">
+                            Verify OTP
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Time Left Label -->
+                <div class="text-center mt-3">
+                    <p style="color: #6a6a8e; font-size: 0.9rem; font-weight: bold;">
+                        Time left to verify your OTP:
+                    </p>
+                </div>
+
+                <!-- Timer Display -->
+                <div class="text-center mt-2">
+                    <span id="timeLeft" style="font-size: 0.9rem; color: #2cbcac;">60</span> seconds left
+                </div>
+
+                <!-- Resend Button -->
+                <div class="text-center mt-3">
+                    <button
+                        type="button"
+                        id="resendBtn"
+                        class="btn btn-link"
+                        style="border-radius: 20px; padding: 8px 20px; font-size: 1rem; color: #ffffff; background-color: #1a2f56; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); border: none;text-decoration:none"
+                        onclick="window.location.href='{% url 'resend_otp' %}'">
+                        Resend Code
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let countdownTimer;
+    const totalTime = 60; // Total time in seconds (1 minute)
+    let remainingTime = totalTime;
+    const timeLeft = document.getElementById("timeLeft");
+    const resendBtn = document.getElementById("resendBtn");
+
+    // Function to start the timer
+    function startTimer() {
+        // Reset the time to 60 seconds
+        remainingTime = totalTime;
+        timeLeft.innerText = remainingTime;
+        resendBtn.style.display = "none";
+
+        // Update the timer every second
+        countdownTimer = setInterval(() => {
+            remainingTime--;
+            timeLeft.innerText = remainingTime;
+
+            // If time ends, show the "Resend" button
+            if (remainingTime <= 0) {
+                clearInterval(countdownTimer); // Stop the timer
+                resendBtn.style.display = "block"; // Show "Resend" button
+            }
+        }, 1000);
+    }
+
+    // Prevent resetting the timer on incorrect OTP, just show the error message
+    // Check if the timer has already been started
+    if (!window.timerStarted) {
+        startTimer();  // Start the timer only once when the page loads
+        window.timerStarted = true;  // Set flag to prevent restarting the timer
+    }
+
+</script>
+
+{% endblock content2 %}
+{% block footer %}{% endblock footer %}

@@ -1,0 +1,971 @@
+{% extends "dashboard.html" %}
+{% load static %}
+{% block title %}Hair Health Index{% endblock %}
+{% block dashboard_content %}
+
+<style>
+:root {
+  --mangalya-primary:#2cbcac;
+  --mangalya-secondary:#2c447c;
+}
+
+.mangalya-heading{color:var(--mangalya-secondary)}
+.mangalya-card{
+  border-radius:16px;
+  background:#fff;
+  border-top:4px solid var(--mangalya-primary);
+  box-shadow:0 6px 18px rgba(0,0,0,.06)
+}
+.mangalya-card .card-body{padding:.75rem}
+
+/* ===== MEDICAL SLIDER SYSTEM ===== */
+.medical-slider{margin:10px 0 18px}
+
+.medical-track{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  height:10px;
+  border-radius:8px;
+  overflow:hidden;
+  position:relative
+}
+.medical-zone.red{background:#dc3545}
+.medical-zone.orange{background:#fd7e14}
+.medical-zone.green{background:#198754}
+
+.medical-thumb{
+  position:absolute;
+  top:50%;
+  width:18px;height:18px;
+  background:#2c447c;
+  border-radius:50%;
+  transform:translate(-50%,-50%);
+  box-shadow:0 0 0 3px #fff,0 2px 6px rgba(0,0,0,.25);
+  z-index:5
+}
+.medical-labels{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  font-size:.6rem;
+  color:#666;
+  text-align:center;
+  margin-top:6px;
+  line-height:1.1
+}
+.medical-zone,.medical-labels span{cursor:pointer}
+
+/* Progress badge */
+.section-progress{
+  font-size:.75rem;
+  padding:2px 8px;
+  border-radius:12px;
+  background:#eef3fb;
+  color:var(--mangalya-secondary);
+  margin-left:6px
+}
+
+
+
+
+/* ===== BMI-STYLE WELLNESS GAUGE ===== */
+/* ===== PERFECT 3-COLOR SEMI-CIRCLE GAUGE ===== */
+.medical-gauge-wrap {
+  position: relative;
+  width: 260px;
+  height: 130px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+/* Outer arc */
+.medical-gauge {
+  width: 260px;
+  height: 260px;
+  border-radius: 50%;
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  background: conic-gradient(
+    from 270deg,
+    #dc3545 0deg 90deg,     /* 🔴 Red (LEFT) */
+    #fd7e14 90deg 130deg,  /* 🟠 Orange (MIDDLE) */
+    #198754 130deg 180deg, /* 🟢 Green (RIGHT) */
+    transparent 180deg 360deg
+  );
+}
+
+
+
+/* Inner cutout */
+.medical-gauge::after {
+  content: "";
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  background: #fff;
+  border-radius: 50%;
+  top: 40px;
+  left: 40px;
+}
+
+/* Needle */
+.medical-needle {
+  position: absolute;
+  width: 4px;
+  height: 90px;
+  background: #222;
+  left: 50%;
+  bottom: 0;
+  transform-origin: bottom center;
+  transform: rotate(-90deg);
+  transition: transform 0.8s ease;
+  z-index: 5;
+}
+
+/* Needle center */
+.medical-center {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  background: #222;
+  border-radius: 50%;
+  left: 50%;
+  bottom: -7px;
+  transform: translateX(-50%);
+  z-index: 6;
+}
+
+
+</style>
+
+<div class="dashboard-container">
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h4 class="fw-semibold mangalya-heading mb-0">
+    Hair Health Index Calculator
+  </h4>
+</div>
+
+<div class="row">
+<div class="col-lg-8">
+
+<!-- ================= CLINICAL ================= -->
+<div class="card mangalya-card mb-3"><div class="card-body">
+<h5 class="mangalya-heading">Clinical Hair Assessment
+  <span id="progressA" class="section-progress">0%</span>
+</h5>
+
+{% comment %} ===== REUSABLE BLOCK: COPY PATTERN ===== {% endcomment %}
+
+<!-- Hair Density -->
+<div class="mb-3">
+<label>Hair Density</label>
+<div class="medical-slider" data-name="hair_density" data-group="A" data-value="1">
+  <div class="medical-track">
+    <div class="medical-zone red" data-value="1"></div>
+    <div class="medical-zone red" data-value="2"></div>
+    <div class="medical-zone orange" data-value="3"></div>
+    <div class="medical-zone orange" data-value="4"></div>
+    <div class="medical-zone green" data-value="5"></div>
+    <div class="medical-thumb"></div>
+  </div>
+  <small>Score: <span class="score-value">1</span>/5</small>
+  <div class="medical-labels">
+    <span data-value="1">Severely Reduced</span>
+    <span data-value="2">Reduced</span>
+    <span data-value="3">Moderate</span>
+    <span data-value="4">Dense</span>
+    <span data-value="5">Very Dense</span>
+  </div>
+</div>
+</div>
+
+<!-- Hair Fall Severity -->
+<div class="mb-3">
+<label>Hair Fall Severity</label>
+<div class="medical-slider" data-name="hair_fall" data-group="A" data-value="1">
+  <div class="medical-track">
+    <div class="medical-zone red" data-value="1"></div>
+    <div class="medical-zone red" data-value="2"></div>
+    <div class="medical-zone orange" data-value="3"></div>
+    <div class="medical-zone orange" data-value="4"></div>
+    <div class="medical-zone green" data-value="5"></div>
+    <div class="medical-thumb"></div>
+  </div>
+  <small>Score: <span class="score-value">1</span>/5</small>
+  <div class="medical-labels">
+    <span data-value="1">Excessive</span>
+    <span data-value="2">High</span>
+    <span data-value="3">Moderate</span>
+    <span data-value="4">Mild</span>
+    <span data-value="5">Minimal</span>
+  </div>
+</div>
+</div>
+
+<!-- Breakage / Weak Roots -->
+<div class="mb-3">
+<label>Breakage / Weak Roots</label>
+<div class="medical-slider" data-name="weak_roots" data-group="A" data-value="1">
+  <div class="medical-track">
+    <div class="medical-zone red" data-value="1"></div>
+    <div class="medical-zone red" data-value="2"></div>
+    <div class="medical-zone orange" data-value="3"></div>
+    <div class="medical-zone orange" data-value="4"></div>
+    <div class="medical-zone green" data-value="5"></div>
+    <div class="medical-thumb"></div>
+  </div>
+  <small>Score: <span class="score-value">1</span>/5</small>
+  <div class="medical-labels">
+    <span data-value="1">Severely Weak</span>
+    <span data-value="2">Weak</span>
+    <span data-value="3">Average</span>
+    <span data-value="4">Good</span>
+    <span data-value="5">Strong</span>
+  </div>
+</div>
+</div>
+
+<!-- Hair Thickness -->
+<div class="mb-3">
+<label>Hair Thickness</label>
+<div class="medical-slider" data-name="hair_thickness" data-group="A" data-value="1">
+  <div class="medical-track">
+    <div class="medical-zone red" data-value="1"></div>
+    <div class="medical-zone red" data-value="2"></div>
+    <div class="medical-zone orange" data-value="3"></div>
+    <div class="medical-zone orange" data-value="4"></div>
+    <div class="medical-zone green" data-value="5"></div>
+    <div class="medical-thumb"></div>
+  </div>
+  <small>Score: <span class="score-value">1</span>/5</small>
+  <div class="medical-labels">
+    <span data-value="1">Extremely Thin</span>
+    <span data-value="2">Thin</span>
+    <span data-value="3">Average</span>
+    <span data-value="4">Thick</span>
+    <span data-value="5">Very Thick</span>
+  </div>
+</div>
+</div>
+
+<!-- Hair Pull Test -->
+<div class="mb-3">
+<label>Hair Pull Test</label>
+<div class="medical-slider" data-name="hair_pull" data-group="A" data-value="1">
+  <div class="medical-track">
+    <div class="medical-zone red" data-value="1"></div>
+    <div class="medical-zone red" data-value="2"></div>
+    <div class="medical-zone orange" data-value="3"></div>
+    <div class="medical-zone orange" data-value="4"></div>
+    <div class="medical-zone green" data-value="5"></div>
+    <div class="medical-thumb"></div>
+  </div>
+  <small>Score: <span class="score-value">1</span>/5</small>
+  <div class="medical-labels">
+    <span data-value="1">Strongly +</span>
+    <span data-value="2">Moderately +</span>
+    <span data-value="3">Mildly +</span>
+    <span data-value="4">Borderline</span>
+    <span data-value="5">Negative</span>
+  </div>
+</div>
+</div>
+
+<div class="fw-semibold">Subtotal A: <span id="subtotalA">5</span> / 25</div>
+</div></div>
+
+<!-- ================= SCALP HEALTH ASSESSMENT ================= -->
+<div class="card mangalya-card mb-3">
+  <div class="card-body">
+    <h5 class="mangalya-heading">
+      Scalp Health Assessment
+      <span id="progressB" class="section-progress">0%</span>
+    </h5>
+
+    <!-- Scalp Oil Balance -->
+    <div class="mb-3">
+      <label>Scalp Oil Balance</label>
+      <div class="medical-slider" data-name="scalp_oil" data-group="B" data-value="1">
+        <div class="medical-track">
+          <div class="medical-zone red" data-value="1"></div>
+          <div class="medical-zone red" data-value="2"></div>
+          <div class="medical-zone orange" data-value="3"></div>
+          <div class="medical-zone orange" data-value="4"></div>
+          <div class="medical-zone green" data-value="5"></div>
+          <div class="medical-thumb"></div>
+        </div>
+        <small>Score: <span class="score-value">1</span>/5</small>
+        <div class="medical-labels">
+          <span data-value="1">Very Dry</span>
+          <span data-value="2">Dry</span>
+          <span data-value="3">Balanced</span>
+          <span data-value="4">Oily</span>
+          <span data-value="5">Excessively Oily</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Itching / Sensitivity -->
+    <div class="mb-3">
+      <label>Itching / Sensitivity</label>
+      <div class="medical-slider" data-name="scalp_itch" data-group="B" data-value="1">
+        <div class="medical-track">
+          <div class="medical-zone red" data-value="1"></div>
+          <div class="medical-zone red" data-value="2"></div>
+          <div class="medical-zone orange" data-value="3"></div>
+          <div class="medical-zone orange" data-value="4"></div>
+          <div class="medical-zone green" data-value="5"></div>
+          <div class="medical-thumb"></div>
+        </div>
+        <small>Score: <span class="score-value">1</span>/5</small>
+        <div class="medical-labels">
+          <span data-value="1">Severe Persistent</span>
+          <span data-value="2">Frequent</span>
+          <span data-value="3">Occasional</span>
+          <span data-value="4">Rare Sensitivity</span>
+          <span data-value="5">No Itching</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Follicle Visibility -->
+    <div class="mb-3">
+      <label>Follicle Visibility</label>
+      <div class="medical-slider" data-name="scalp_follicle" data-group="B" data-value="1">
+        <div class="medical-track">
+          <div class="medical-zone red" data-value="1"></div>
+          <div class="medical-zone red" data-value="2"></div>
+          <div class="medical-zone orange" data-value="3"></div>
+          <div class="medical-zone orange" data-value="4"></div>
+          <div class="medical-zone green" data-value="5"></div>
+          <div class="medical-thumb"></div>
+        </div>
+        <small>Score: <span class="score-value">1</span>/5</small>
+        <div class="medical-labels">
+          <span data-value="1">Mostly Blocked</span>
+          <span data-value="2">Partially Blocked</span>
+          <span data-value="3">Moderately Clear</span>
+          <span data-value="4">Mostly Clear</span>
+          <span data-value="5">Fully Clear</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dandruff / Scaling -->
+    <div class="mb-3">
+      <label>Dandruff / Scaling</label>
+      <div class="medical-slider" data-name="scalp_dandruff" data-group="B" data-value="1">
+        <div class="medical-track">
+          <div class="medical-zone red" data-value="1"></div>
+          <div class="medical-zone red" data-value="2"></div>
+          <div class="medical-zone orange" data-value="3"></div>
+          <div class="medical-zone orange" data-value="4"></div>
+          <div class="medical-zone green" data-value="5"></div>
+          <div class="medical-thumb"></div>
+        </div>
+        <small>Score: <span class="score-value">1</span>/5</small>
+        <div class="medical-labels">
+          <span data-value="1">Severe Thick Scaling</span>
+          <span data-value="2">Moderate Scaling</span>
+          <span data-value="3">Mild Scaling</span>
+          <span data-value="4">Occasional Flakes</span>
+          <span data-value="5">Clear Scalp</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scalp Circulation -->
+    <div class="mb-3">
+      <label>Scalp Circulation</label>
+      <div class="medical-slider" data-name="scalp_circulation" data-group="B" data-value="1">
+        <div class="medical-track">
+          <div class="medical-zone red" data-value="1"></div>
+          <div class="medical-zone red" data-value="2"></div>
+          <div class="medical-zone orange" data-value="3"></div>
+          <div class="medical-zone orange" data-value="4"></div>
+          <div class="medical-zone green" data-value="5"></div>
+          <div class="medical-thumb"></div>
+        </div>
+        <small>Score: <span class="score-value">1</span>/5</small>
+        <div class="medical-labels">
+          <span data-value="1">Poor</span>
+          <span data-value="2">Below Average</span>
+          <span data-value="3">Average</span>
+          <span data-value="4">Good</span>
+          <span data-value="5">Excellent</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="fw-semibold">
+      Subtotal B: <span id="subtotalB">5</span> / 25
+    </div>
+  </div>
+</div>
+
+
+
+<!-- ================= TRICOSCOPIC ASSESSMENT ================= -->
+<div class="card mangalya-card mb-3">
+  <div class="card-body">
+    <h5 class="mangalya-heading">
+      Tricoscopic Assessment
+      <span id="progressC" class="section-progress">0%</span>
+    </h5>
+
+    <!-- Follicular Density -->
+    <div class="mb-3">
+      <label>Follicular Density</label>
+      <div class="medical-slider" data-name="tricho_density" data-group="C" data-value="1">
+        <div class="medical-track">
+          <div class="medical-zone red" data-value="1"></div>
+          <div class="medical-zone red" data-value="2"></div>
+          <div class="medical-zone orange" data-value="3"></div>
+          <div class="medical-zone orange" data-value="4"></div>
+          <div class="medical-zone green" data-value="5"></div>
+          <div class="medical-thumb"></div>
+        </div>
+        <small>Score: <span class="score-value">1</span>/5</small>
+        <div class="medical-labels">
+          <span data-value="1">Severely Reduced</span>
+          <span data-value="2">Reduced</span>
+          <span data-value="3">Moderate</span>
+          <span data-value="4">Good</span>
+          <span data-value="5">Excellent</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Follicular Openings -->
+    <div class="mb-3">
+      <label>Follicular Openings</label>
+      <div class="medical-slider" data-name="tricho_openings" data-group="C" data-value="1">
+        <div class="medical-track">
+          <div class="medical-zone red" data-value="1"></div>
+          <div class="medical-zone red" data-value="2"></div>
+          <div class="medical-zone orange" data-value="3"></div>
+          <div class="medical-zone orange" data-value="4"></div>
+          <div class="medical-zone green" data-value="5"></div>
+          <div class="medical-thumb"></div>
+        </div>
+        <small>Score: <span class="score-value">1</span>/5</small>
+        <div class="medical-labels">
+          <span data-value="1">Mostly Closed</span>
+          <span data-value="2">Many Blocked</span>
+          <span data-value="3">Moderately Open</span>
+          <span data-value="4">Mostly Open</span>
+          <span data-value="5">Clearly Open</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Miniaturised Hairs -->
+    <div class="mb-3">
+      <label>Miniaturised Hairs</label>
+      <div class="medical-slider" data-name="tricho_miniaturised" data-group="C" data-value="1">
+        <div class="medical-track">
+          <div class="medical-zone red" data-value="1"></div>
+          <div class="medical-zone red" data-value="2"></div>
+          <div class="medical-zone orange" data-value="3"></div>
+          <div class="medical-zone orange" data-value="4"></div>
+          <div class="medical-zone green" data-value="5"></div>
+          <div class="medical-thumb"></div>
+        </div>
+        <small>Score: <span class="score-value">1</span>/5</small>
+        <div class="medical-labels">
+          <span data-value="1">Excessive</span>
+          <span data-value="2">Many</span>
+          <span data-value="3">Moderate</span>
+          <span data-value="4">Few</span>
+          <span data-value="5">Absent</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hair Shaft Thickness Variation -->
+    <div class="mb-3">
+      <label>Hair Shaft Thickness Variation</label>
+      <div class="medical-slider" data-name="tricho_variation" data-group="C" data-value="1">
+        <div class="medical-track">
+          <div class="medical-zone red" data-value="1"></div>
+          <div class="medical-zone red" data-value="2"></div>
+          <div class="medical-zone orange" data-value="3"></div>
+          <div class="medical-zone orange" data-value="4"></div>
+          <div class="medical-zone green" data-value="5"></div>
+          <div class="medical-thumb"></div>
+        </div>
+        <small>Score: <span class="score-value">1</span>/5</small>
+        <div class="medical-labels">
+          <span data-value="1">Severe Variation</span>
+          <span data-value="2">Marked Variation</span>
+          <span data-value="3">Moderate Variation</span>
+          <span data-value="4">Minimal Variation</span>
+          <span data-value="5">Uniform Thickness</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Perifollicular Scaling -->
+    <div class="mb-3">
+      <label>Perifollicular Scaling</label>
+      <div class="medical-slider" data-name="tricho_scaling" data-group="C" data-value="1">
+        <div class="medical-track">
+          <div class="medical-zone red" data-value="1"></div>
+          <div class="medical-zone red" data-value="2"></div>
+          <div class="medical-zone orange" data-value="3"></div>
+          <div class="medical-zone orange" data-value="4"></div>
+          <div class="medical-zone green" data-value="5"></div>
+          <div class="medical-thumb"></div>
+        </div>
+        <small>Score: <span class="score-value">1</span>/5</small>
+        <div class="medical-labels">
+          <span data-value="1">Severe</span>
+          <span data-value="2">Moderate</span>
+          <span data-value="3">Mild</span>
+          <span data-value="4">Minimal</span>
+          <span data-value="5">Absent</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="fw-semibold">
+      Subtotal C: <span id="subtotalC">5</span> / 25
+    </div>
+  </div>
+</div>
+
+
+
+<!-- ================= LIFESTYLE & TRIGGER FACTORS ================= -->
+<div class="card mangalya-card mb-3">
+  <div class="card-body">
+    <h5 class="mangalya-heading">
+      Lifestyle & Trigger Factors
+      <span id="progressE" class="section-progress">0%</span>
+    </h5>
+
+    <!-- Stress Level -->
+    <div class="mb-3">
+      <label>Stress Level</label>
+      <div class="medical-slider" data-name="life_stress" data-group="E" data-value="1">
+        <div class="medical-track">
+          <div class="medical-zone red" data-value="1"></div>
+          <div class="medical-zone red" data-value="2"></div>
+          <div class="medical-zone orange" data-value="3"></div>
+          <div class="medical-zone orange" data-value="4"></div>
+          <div class="medical-zone green" data-value="5"></div>
+          <div class="medical-thumb"></div>
+        </div>
+        <small>Score: <span class="score-value">1</span>/5</small>
+        <div class="medical-labels">
+          <span data-value="1">Extreme</span>
+          <span data-value="2">High</span>
+          <span data-value="3">Moderate</span>
+          <span data-value="4">Mild</span>
+          <span data-value="5">Well Controlled</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Diet Quality -->
+    <div class="mb-3">
+      <label>Diet Quality</label>
+      <div class="medical-slider" data-name="life_diet" data-group="E" data-value="1">
+        <div class="medical-track">
+          <div class="medical-zone red" data-value="1"></div>
+          <div class="medical-zone red" data-value="2"></div>
+          <div class="medical-zone orange" data-value="3"></div>
+          <div class="medical-zone orange" data-value="4"></div>
+          <div class="medical-zone green" data-value="5"></div>
+          <div class="medical-thumb"></div>
+        </div>
+        <small>Score: <span class="score-value">1</span>/5</small>
+        <div class="medical-labels">
+          <span data-value="1">Very Poor</span>
+          <span data-value="2">Poor</span>
+          <span data-value="3">Average</span>
+          <span data-value="4">Balanced</span>
+          <span data-value="5">Optimal</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hormonal Stability -->
+    <div class="mb-3">
+      <label>Hormonal Stability</label>
+      <div class="medical-slider" data-name="life_hormones" data-group="E" data-value="1">
+        <div class="medical-track">
+          <div class="medical-zone red" data-value="1"></div>
+          <div class="medical-zone red" data-value="2"></div>
+          <div class="medical-zone orange" data-value="3"></div>
+          <div class="medical-zone orange" data-value="4"></div>
+          <div class="medical-zone green" data-value="5"></div>
+          <div class="medical-thumb"></div>
+        </div>
+        <small>Score: <span class="score-value">1</span>/5</small>
+        <div class="medical-labels">
+          <span data-value="1">Highly Imbalanced</span>
+          <span data-value="2">Imbalanced</span>
+          <span data-value="3">Borderline</span>
+          <span data-value="4">Stable</span>
+          <span data-value="5">Well Balanced</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sleep Quality -->
+    <div class="mb-3">
+      <label>Sleep Quality</label>
+      <div class="medical-slider" data-name="life_sleep" data-group="E" data-value="1">
+        <div class="medical-track">
+          <div class="medical-zone red" data-value="1"></div>
+          <div class="medical-zone red" data-value="2"></div>
+          <div class="medical-zone orange" data-value="3"></div>
+          <div class="medical-zone orange" data-value="4"></div>
+          <div class="medical-zone green" data-value="5"></div>
+          <div class="medical-thumb"></div>
+        </div>
+        <small>Score: <span class="score-value">1</span>/5</small>
+        <div class="medical-labels">
+          <span data-value="1">Poor</span>
+          <span data-value="2">Disturbed</span>
+          <span data-value="3">Average</span>
+          <span data-value="4">Good</span>
+          <span data-value="5">Restful</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Digestive Health -->
+    <div class="mb-3">
+      <label>Digestive Health</label>
+      <div class="medical-slider" data-name="life_digest" data-group="E" data-value="1">
+        <div class="medical-track">
+          <div class="medical-zone red" data-value="1"></div>
+          <div class="medical-zone red" data-value="2"></div>
+          <div class="medical-zone orange" data-value="3"></div>
+          <div class="medical-zone orange" data-value="4"></div>
+          <div class="medical-zone green" data-value="5"></div>
+          <div class="medical-thumb"></div>
+        </div>
+        <small>Score: <span class="score-value">1</span>/5</small>
+        <div class="medical-labels">
+          <span data-value="1">Poor</span>
+          <span data-value="2">Irregular</span>
+          <span data-value="3">Moderate</span>
+          <span data-value="4">Stable</span>
+          <span data-value="5">Optimal</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="fw-semibold">
+      Subtotal E: <span id="subtotalE">5</span> / 25
+    </div>
+  </div>
+</div>
+
+
+
+<!-- ================= BIOCHEMICAL & INTERNAL FACTORS ================= -->
+<div class="card mangalya-card mb-3">
+  <div class="card-body">
+    <h5 class="mangalya-heading">
+      Biochemical & Internal Factors
+      <span id="progressD" class="section-progress">0%</span>
+    </h5>
+
+    <!-- Hb / Ferritin -->
+    <div class="mb-3">
+      <label>Hb / Ferritin</label>
+      <div class="medical-slider" data-name="bio_hb" data-group="D" data-value="1">
+        <div class="medical-track">
+          <div class="medical-zone red" data-value="1"></div>
+          <div class="medical-zone red" data-value="2"></div>
+          <div class="medical-zone orange" data-value="3"></div>
+          <div class="medical-zone orange" data-value="4"></div>
+          <div class="medical-zone green" data-value="5"></div>
+          <div class="medical-thumb"></div>
+        </div>
+        <small>Score: <span class="score-value">1</span>/5</small>
+        <div class="medical-labels">
+          <span data-value="1">Severely Deficient</span>
+          <span data-value="2">Deficient</span>
+          <span data-value="3">Borderline</span>
+          <span data-value="4">Adequate</span>
+          <span data-value="5">Optimal</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Vitamin B12 -->
+    <div class="mb-3">
+      <label>Vitamin B12</label>
+      <div class="medical-slider" data-name="bio_b12" data-group="D" data-value="1">
+        <div class="medical-track">
+          <div class="medical-zone red" data-value="1"></div>
+          <div class="medical-zone red" data-value="2"></div>
+          <div class="medical-zone orange" data-value="3"></div>
+          <div class="medical-zone orange" data-value="4"></div>
+          <div class="medical-zone green" data-value="5"></div>
+          <div class="medical-thumb"></div>
+        </div>
+        <small>Score: <span class="score-value">1</span>/5</small>
+        <div class="medical-labels">
+          <span data-value="1">Severely Low</span>
+          <span data-value="2">Low</span>
+          <span data-value="3">Borderline</span>
+          <span data-value="4">Adequate</span>
+          <span data-value="5">Optimal</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Blood Sugar / Insulin Resistance -->
+    <div class="mb-3">
+      <label>Blood Sugar / Insulin Resistance</label>
+      <div class="medical-slider" data-name="bio_sugar" data-group="D" data-value="1">
+        <div class="medical-track">
+          <div class="medical-zone red" data-value="1"></div>
+          <div class="medical-zone red" data-value="2"></div>
+          <div class="medical-zone orange" data-value="3"></div>
+          <div class="medical-zone orange" data-value="4"></div>
+          <div class="medical-zone green" data-value="5"></div>
+          <div class="medical-thumb"></div>
+        </div>
+        <small>Score: <span class="score-value">1</span>/5</small>
+        <div class="medical-labels">
+          <span data-value="1">Poor Control</span>
+          <span data-value="2">Unstable</span>
+          <span data-value="3">Borderline</span>
+          <span data-value="4">Stable</span>
+          <span data-value="5">Optimal</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Vitamin D3 -->
+    <div class="mb-3">
+      <label>Vitamin D3</label>
+      <div class="medical-slider" data-name="bio_d3" data-group="D" data-value="1">
+        <div class="medical-track">
+          <div class="medical-zone red" data-value="1"></div>
+          <div class="medical-zone red" data-value="2"></div>
+          <div class="medical-zone orange" data-value="3"></div>
+          <div class="medical-zone orange" data-value="4"></div>
+          <div class="medical-zone green" data-value="5"></div>
+          <div class="medical-thumb"></div>
+        </div>
+        <small>Score: <span class="score-value">1</span>/5</small>
+        <div class="medical-labels">
+          <span data-value="1">Severely Low</span>
+          <span data-value="2">Low</span>
+          <span data-value="3">Borderline</span>
+          <span data-value="4">Adequate</span>
+          <span data-value="5">Optimal</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- TSH -->
+    <div class="mb-3">
+      <label>TSH</label>
+      <div class="medical-slider" data-name="bio_tsh" data-group="D" data-value="1">
+        <div class="medical-track">
+          <div class="medical-zone red" data-value="1"></div>
+          <div class="medical-zone red" data-value="2"></div>
+          <div class="medical-zone orange" data-value="3"></div>
+          <div class="medical-zone orange" data-value="4"></div>
+          <div class="medical-zone green" data-value="5"></div>
+          <div class="medical-thumb"></div>
+        </div>
+        <small>Score: <span class="score-value">1</span>/5</small>
+        <div class="medical-labels">
+          <span data-value="1">Poorly Controlled</span>
+          <span data-value="2">Abnormal</span>
+          <span data-value="3">Borderline</span>
+          <span data-value="4">Stable</span>
+          <span data-value="5">Optimal</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="fw-semibold">
+      Subtotal D: <span id="subtotalD">5</span> / 25
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+</div>
+
+<!-- RIGHT PANEL -->
+<div class="col-lg-4">
+  <div class="card mangalya-card sticky-top" style="top:80px;">
+    <div class="card-body text-center">
+
+      <h5 class="mangalya-heading mb-3">Hair Wellness Result</h5>
+
+<div class="medical-gauge-wrap">
+  <div class="medical-gauge"></div>
+
+  <div class="medical-needle" id="gaugeNeedle"></div>
+  <div class="medical-center"></div>
+</div>
+
+<h2 class="mt-2">
+  <span id="totalScore">0</span> / 125
+</h2>
+
+<div class="fw-semibold" id="statusText">Critical</div>
+
+<div class="fw-semibold text-success" id="phaseText">
+  Revitalize + Reactive + Retain
+</div>
+
+
+    </div>
+  </div>
+</div>
+
+
+</div>
+
+<script>
+/* ===== MEDICAL SLIDER ENGINE ===== */
+function initMedicalSliders(){
+  document.querySelectorAll('.medical-slider').forEach(slider=>{
+    const thumb=slider.querySelector('.medical-thumb');
+    const scoreEl=slider.querySelector('.score-value');
+
+    function setValue(val){
+      val=parseInt(val);
+      slider.dataset.value=val;
+      scoreEl.innerText=val;
+
+      const pos={1:'10%',2:'30%',3:'50%',4:'70%',5:'90%'};
+      thumb.style.left=pos[val];
+      calculateSubtotals();
+    }
+
+    slider.querySelectorAll('.medical-zone').forEach(z=>{
+      z.addEventListener('click',()=>setValue(z.dataset.value));
+    });
+    slider.querySelectorAll('.medical-labels span').forEach(l=>{
+      l.addEventListener('click',()=>setValue(l.dataset.value));
+    });
+
+    setValue(slider.dataset.value||1);
+  });
+}
+
+function getMedicalValue(name){
+  const el=document.querySelector('.medical-slider[data-name="'+name+'"]');
+  return el?parseInt(el.dataset.value||1):0;
+}
+function calculateSubtotals(){
+  let subtotalA=0;
+  let subtotalB=0;
+  let subtotalC=0;
+  let subtotalD=0;
+  let subtotalE=0;
+
+  // Clinical
+  ['hair_density','hair_fall','weak_roots','hair_thickness','hair_pull']
+    .forEach(n=> subtotalA += getMedicalValue(n));
+
+  // Scalp
+  ['scalp_oil','scalp_itch','scalp_follicle','scalp_dandruff','scalp_circulation']
+    .forEach(n=> subtotalB += getMedicalValue(n));
+
+  // Tricoscopy
+  ['tricho_density','tricho_openings','tricho_miniaturised','tricho_variation','tricho_scaling']
+    .forEach(n=> subtotalC += getMedicalValue(n));
+
+  // Biochemical
+  ['bio_hb','bio_b12','bio_sugar','bio_d3','bio_tsh']
+    .forEach(n=> subtotalD += getMedicalValue(n));
+
+  // Lifestyle
+  ['life_stress','life_diet','life_hormones','life_sleep','life_digest']
+    .forEach(n=> subtotalE += getMedicalValue(n));
+
+  document.getElementById('subtotalA').innerText=subtotalA;
+  document.getElementById('subtotalB').innerText=subtotalB;
+  document.getElementById('subtotalC').innerText=subtotalC;
+  document.getElementById('subtotalD').innerText=subtotalD;
+  document.getElementById('subtotalE').innerText=subtotalE;
+
+  document.getElementById('progressA').innerText=Math.round(subtotalA/25*100)+'%';
+  document.getElementById('progressB').innerText=Math.round(subtotalB/25*100)+'%';
+  document.getElementById('progressC').innerText=Math.round(subtotalC/25*100)+'%';
+  document.getElementById('progressD').innerText=Math.round(subtotalD/25*100)+'%';
+  document.getElementById('progressE').innerText=Math.round(subtotalE/25*100)+'%';
+
+  const total = subtotalA + subtotalB + subtotalC + subtotalD + subtotalE;
+  document.getElementById('totalScore').innerText = total;
+
+  calculateStatusAndPhase(total);
+}
+
+
+function calculateStatusAndPhase(total){
+  let status='',phase='';
+
+  if(total <= 40){
+    status='Critical';
+    phase='Revitalize + Reactive + Retain';
+  }
+  else if(total <= 65){
+    status='Poor';
+    phase='Revitalize + Reactive';
+  }
+  else if(total <= 85){
+    status='Moderate';
+    phase='Reactive + Retain';
+  }
+  else if(total <= 105){
+    status='Fair';
+    phase='Retain + Preventive';
+  }
+  else{
+    status='Good';
+    phase='Retain (Maintenance)';
+  }
+
+  document.getElementById('statusText').innerText = status;
+  document.getElementById('phaseText').innerText = phase;
+
+  // 🔥 Update Gauge Needle
+  updateGauge(total);
+}
+
+
+
+function updateGauge(total){
+  // Clamp 0–125
+  const percent = Math.min(Math.max(total / 125, 0), 1);
+
+  // Map to -90deg to +90deg
+  const angle = -90 + (percent * 180);
+
+  document.getElementById('gaugeNeedle').style.transform =
+    `rotate(${angle}deg)`;
+}
+
+
+
+
+initMedicalSliders();
+calculateSubtotals();
+</script>
+
+{% endblock %}

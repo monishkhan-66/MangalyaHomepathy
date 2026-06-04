@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Patient Login{% endblock title %}
+
+{% block content2 %}
+
+ <div class="container">
+    <div class="login-card w-50 mx-auto">
+      <h4 class="clinic-title">Patient Login</h4>
+      <form action="/patient-login/" method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label for="email" class="form-label">Patient Id Or Username</label>
+          <input type="text" class="form-control" id="email" name="email_or_mobile" required placeholder="Patient Id Or Username">
+        </div>
+
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input type="password" class="form-control" id="password" name="password" required placeholder="Enter password">
+        </div>
+
+        <div class="d-grid mb-3">
+          <button type="submit" class="btn btn-primary">Login</button>
+        </div>
+
+        <div class="text-center">
+          <small>New patient? <a href="/book-appointment/">Book Appointment</a></small><br>
+          <!--<small><a href="#">Forgot Password?</a></small>-->
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock content2 %}

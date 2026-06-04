@@ -1,0 +1,463 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+body {
+  background-color: white;
+  padding-top: 100px;
+
+}
+.navbar{
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    background-color: white; /* Ensure navbar background is visible */
+    opacity:0.9;
+
+
+}
+
+@media (max-width: 992px) {
+
+  /* Adjust for smaller screens */
+
+
+
+  .navbar {
+    top: 0;
+  }
+
+  .hero-section {
+    flex-direction: column;
+    text-align: center;
+    height: auto;
+
+  }
+
+  .hero-image img {
+    width: 100%;
+    height: auto;
+  }
+
+}
+
+
+
+@media (max-width: 576px) {
+
+  /* Adjust breakpoint as needed */
+  .book-btn {
+    padding: 10px 30px;
+    /* Smaller padding */
+    font-size: 15px;
+    /* Smaller font size */
+  }
+
+}
+
+.custom-input {
+        padding: 15px 20px; /* Increased padding */
+        font-size: 16px; /* Slightly bigger font */
+        border: 2px solid #ccc; /* Border */
+        border-radius: 8px; /* Rounded corners */
+
+}
+
+/*-------------------------------------------------------result */
+.before-after-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+/* Ellipse shape below images */
+.ellipse-label {
+  width: 180px;
+  height: 40px;
+  background: #0b98b2;
+  border-radius: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-weight: 600;
+  font-size: 14px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Optional: style images if needed */
+.before-after-card img {
+  width: 100%;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+/*----------------------------------------------------result*/
+
+
+
+
+
+.custom-btn {
+  background-color: #0c1757;
+  color: white;
+  transition: background-color 0.3s, color 0.3s;
+  /* Smooth transition */
+}
+
+.custom-btn:hover {
+  background-color: #1a2f56;
+  /* Darker shade on hover */
+  color: #e0e0e0;
+  /* Lightened text color */
+}
+
+.card {
+  border-radius: 10px;
+}
+
+.form-control,
+.form-select {
+  border-radius: 5px;
+  border: 1px solid #e0e0e0;
+}
+
+label {
+  font-weight: bold;
+  color: #0c1757;
+}
+
+.btn-lg:hover {
+  background-color: #1a2f56;
+  color: white;
+}
+
+textarea,
+input,
+select {
+  box-shadow: none;
+}
+
+.mycolor {
+  color: #0c1757;
+}
+
+.mycolor-bg {
+  color: #0c1757;
+}
+
+
+nav .navbar-nav .nav-item .nav-link {
+  color: #0c1757 !important;
+  transition: color 0.3s ease, transform 0.3s ease, text-shadow 0.3s ease !important;
+  position: relative !important;
+}
+
+nav .navbar-nav .nav-item .nav-link:hover {
+  color: #2cbcac !important;
+  transform: translateY(-2px) !important;
+  /* Slight lift effect */
+  text-shadow: 0 2px 5px rgba(44, 188, 172, 0.6) !important;
+  /* Glow effect */
+}
+
+nav .navbar-nav .nav-item .nav-link.active {
+  color: #2cbcac !important;
+  font-weight: bold !important;
+}
+
+
+
+
+/* Ensure specificity with a more detailed selector */
+.hair-treatment-card {
+  width: 15rem;
+
+  border-left: 5px solid #0c1757;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  color: #0c1757;
+
+}
+
+.hair-treatment-card:hover {
+  width: 15rem;
+  border-left: 5px solid #2cbcac;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+.statics{
+   background-image: url("../images/staticsbg.png");
+    background-size: cover;
+
+}
+
+
+.stat-box {
+
+  transform: translateY(30px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out, box-shadow 0.4s ease-in-out;
+  padding: 20px;
+  color: #e0e0e0;
+
+}
+
+/* Highlight Effect */
+.stat-box.show {
+  opacity: 1;
+  transform: translateY(0);
+
+}
+
+
+.hero-section {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: min(100vh, auto);
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.hero-content {
+  flex: 1.5;
+  padding: 0px 20px;
+  color:#0c1757;
+   text-align: left;
+
+}
+
+@media (max-width: 768px) {
+  .hero-content {
+    text-align: center;
+  }
+}
+
+.hero-image {
+  flex: 1;
+}
+
+.hero-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+
+.navbar-toggler {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.treatment-card {
+            transition: transform 0.3s ease-in-out;
+            text-align: center;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+        }
+        .treatment-card:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+        .icon {
+            font-size: 40px;
+            color: #0c1757;
+        }
+
+
+       .contact-container {
+            padding: 30px 0;
+        }
+
+
+        .contact-info h3 {
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        .contact-info p {
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+        .contact-image {
+            width: 100%;
+            max-width: 300px;
+            margin-top: 20px;
+            border-radius: 10px;
+        }
+        .contact-form {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        }
+        .contact-form h3 {
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        .form-control {
+            border-radius: 5px;
+        }
+        .btn-custom {
+            background: #0b98b2;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 16px;
+            color: white;
+        }
+        .btn-custom:hover {
+            background: #0c1757;
+            color: white;
+
+        }
+
+
+        .get-in-touch .contact-box {
+        padding: 20px;
+        background: #f8f9fa;
+        border-radius: 10px;
+        transition: transform 0.3s ease-in-out, box-shadow 0.3s;
+        margin: 10px 0;
+    }
+
+    .get-in-touch .contact-box:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        background: #0c1757;
+        color: white;
+    }
+
+    .contact-box i {
+        color: #0c1757;
+        transition: color 0.3s;
+    }
+
+    .contact-box:hover i {
+        color: white;
+    }
+
+    .animated {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.5s ease-in-out;
+    }
+
+    .fadeIn {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .fadeInLeft {
+        opacity: 1;
+        transform: translateX(-30px);
+    }
+
+    .fadeInRight {
+        opacity: 1;
+        transform: translateX(30px);
+    }
+
+    .fadeInUp {
+        opacity: 1;
+        transform: translateY(-10px);
+    }
+
+
+
+ footer {
+    background-color: #f8f9fa;
+    color: white !important;
+}
+
+footer a {
+    color: white !important;
+    text-decoration: none;
+}
+
+
+
+/*-----------------------------*/
+
+
+/* WRAPPER */
+.cta-wrapper {
+  display: flex;
+  gap: 18px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+/* BASE BUTTON */
+.cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 26px;
+  border-radius: 50px; /* pill shape */
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+/* ICON */
+.cta-btn i {
+  font-size: 16px;
+}
+
+/* CALL BUTTON (OUTLINE) */
+.call-btn {
+  border: 2px solid #0b98b2;
+  color: #0b98b2;
+  background: transparent;
+}
+
+.call-btn:hover {
+  background: #0b98b2;
+  color: #ffffff;
+  box-shadow: 0 6px 18px rgba(11, 152, 178, 0.3);
+}
+
+/* BOOK BUTTON (GRADIENT) */
+.book-btn {
+  background: linear-gradient(135deg, #0b98b2, #0c1757);
+  color: #ffffff;
+  border: none;
+  box-shadow: 0 6px 20px rgba(12, 23, 87, 0.25);
+}
+
+.book-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(12, 23, 87, 0.35);
+}
+
+.cta-btn {
+  backdrop-filter: blur(8px);
+}
+@media (max-width: 768px) {
+  .cta-wrapper {
+    justify-content: center;
+  }
+
+  .cta-btn {
+    width: 80%;
+    justify-content: center;
+  }
+}
+
+
+
+
+

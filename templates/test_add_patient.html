@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>
+        Add Patient
+    </title>
+
+</head>
+
+<body>
+
+    <h1>
+        Add New Patient
+    </h1>
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+        <h2>
+            Patient Details
+        </h2>
+
+        <input
+            type="text"
+            name="first_name"
+            placeholder="First Name"
+        >
+
+        <br><br>
+
+        <input
+            type="text"
+            name="last_name"
+            placeholder="Last Name"
+        >
+
+        <br><br>
+
+        <input
+            type="date"
+            name="dob"
+        >
+
+        <br><br>
+
+        <select name="gender">
+
+            <option value="Male">
+                Male
+            </option>
+
+            <option value="Female">
+                Female
+            </option>
+
+        </select>
+
+        <br><br>
+
+        <input
+            type="email"
+            name="email"
+            placeholder="Email"
+        >
+
+        <br><br>
+
+        <h2>
+            Appointment Details
+        </h2>
+
+        <input
+            type="text"
+            name="disease"
+            placeholder="Disease"
+        >
+
+        <br><br>
+
+        <input
+            type="date"
+            name="appointment_date"
+        >
+
+        <br><br>
+
+        <input
+            type="time"
+            name="appointment_time"
+        >
+
+        <br><br>
+
+        <button type="submit">
+
+            Book Appointment
+
+        </button>
+
+    </form>
+
+</body>
+
+</html>

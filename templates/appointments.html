@@ -1,0 +1,332 @@
+{% extends "dashboard.html" %}
+{% load static %}
+
+{% block title %}Appointments Dashboard{% endblock %}
+
+{% block dashboard_content %}
+
+<style>
+:root {
+  --mangalya-primary: #2cbcac;
+  --mangalya-secondary: #2c447c;
+  --mangalya-soft: #eefaf8;
+}
+
+/* ---------- Layout ---------- */
+.dashboard-container {
+  margin-top: 0;
+}
+
+/* ---------- Cards ---------- */
+.mangalya-heading {
+  color: var(--mangalya-secondary);
+}
+
+.mangalya-card {
+  border-radius: 16px;
+  background: #fff;
+  border-top: 4px solid var(--mangalya-primary);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+}
+
+.mangalya-card .card-body {
+  padding: 0.75rem;
+}
+
+.mangalya-card h4 {
+  margin-bottom: 0;
+}
+
+/* ---------- KPI MOBILE ---------- */
+@media (max-width: 576px) {
+  .mangalya-card .card-body {
+    padding: 0.5rem !important;
+  }
+
+  .mangalya-card small {
+    font-size: 0.7rem;
+  }
+
+  .mangalya-card h4 {
+    font-size: 1rem;
+  }
+}
+
+/* ---------- Month Buttons ---------- */
+.month-btn {
+  border-radius: 30px;
+  padding: 6px 16px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.month-btn.btn-primary {
+  background: var(--mangalya-primary);
+  border-color: var(--mangalya-primary);
+}
+
+.month-btn.btn-outline-primary {
+  color: var(--mangalya-primary);
+  border-color: var(--mangalya-primary);
+}
+
+/* ---------- Table ---------- */
+.table tbody tr:hover {
+  background-color: var(--mangalya-soft);
+}
+
+.table-scroll {
+  max-height: 480px;
+  overflow-x: auto;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 768px) {
+  .table-scroll {
+    max-height: 320px;
+  }
+}
+
+/* ---------- Hide on mobile ---------- */
+@media (max-width: 576px) {
+  .hide-mobile {
+    display: none;
+  }
+}
+</style>
+
+<div class="dashboard-container">
+
+<!-- HEADER -->
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h4 class="fw-semibold mangalya-heading mb-0">
+    Appointments Dashboard
+  </h4>
+  <span class="badge bg-light text-dark border px-3 py-2">
+    Today: {{ today }}
+  </span>
+</div>
+
+<!-- KPI -->
+<div class="row g-2 mb-3">
+  <div class="col-4">
+    <div class="card mangalya-card text-center">
+      <div class="card-body">
+        <small>Today</small>
+        <h4>{{ today_count }}</h4>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-4">
+    <div class="card mangalya-card text-center">
+      <div class="card-body">
+        <small>{{ selected_month_name }}</small>
+        <h4>{{ month_count }}</h4>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-4">
+    <div class="card mangalya-card text-center">
+      <div class="card-body">
+        <small>{{ selected_year }}</small>
+        <h4>{{ year_count }}</h4>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- YEAR -->
+<div class="d-flex justify-content-end mb-2">
+  <form method="get">
+    <select name="year"
+            class="form-select form-select-sm rounded-pill"
+            onchange="this.form.submit()"
+            style="width:120px">
+      {% for y in years %}
+        <option value="{{ y }}"
+          {% if selected_year == y|stringformat:'s' %}selected{% endif %}>
+          {{ y }}
+        </option>
+      {% endfor %}
+    </select>
+  </form>
+</div>
+
+<!-- MONTHS (HORIZONTAL SCROLL ON MOBILE) -->
+<div class="card mb-3">
+  <div class="card-body py-2">
+    <div class="d-flex gap-2 overflow-auto flex-nowrap">
+      {% for num, name in months %}
+        <a href="?month={{ num }}&year={{ selected_year }}"
+           class="btn btn-sm month-btn
+           {% if selected_month == num|stringformat:'s' %}
+             btn-primary
+           {% else %}
+             btn-outline-primary
+           {% endif %}">
+          {{ name }}
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<!-- FILTERS -->
+<div class="card mb-3">
+  <div class="card-body">
+    <form method="GET">
+      <div class="row g-2 align-items-end">
+
+        <div class="col-12 col-md-3">
+          <label class="small text-muted">Date</label>
+          <input type="date"
+                 name="date"
+                 class="form-control form-control-sm rounded-pill"
+                 value="{{ selected_date }}">
+        </div>
+
+        <div class="col-12 col-md-4">
+          <label class="small text-muted mb-1">Time Slot</label>
+          <div class="d-flex gap-3 pt-1 flex-wrap">
+
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox"
+                     name="time" value="morning"
+                     {% if 'morning' in time_filters %}checked{% endif %}>
+              <label class="form-check-label small">Morning</label>
+            </div>
+
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox"
+                     name="time" value="afternoon"
+                     {% if 'afternoon' in time_filters %}checked{% endif %}>
+              <label class="form-check-label small">Afternoon</label>
+            </div>
+
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox"
+                     name="time" value="evening"
+                     {% if 'evening' in time_filters %}checked{% endif %}>
+              <label class="form-check-label small">Evening</label>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="col-12 col-md-3">
+          <label class="small text-muted">Search</label>
+          <input type="text"
+                 name="search"
+                 class="form-control form-control-sm rounded-pill"
+                 value="{{ request.GET.search }}">
+        </div>
+
+        <div class="col-12 col-md-2 text-end">
+          <button class="btn btn-sm btn-primary rounded-pill px-4 w-100 w-md-auto">
+            Apply
+          </button>
+          <a href="{% url 'appointments' %}"
+             class="btn btn-sm btn-light border rounded-pill px-4 w-100 w-md-auto mt-1">
+            Reset
+          </a>
+        </div>
+
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- TABLE -->
+<div class="card">
+  <div class="table-responsive table-scroll">
+    <table class="table table-sm align-middle">
+      <thead class="table-light sticky-top">
+        <tr>
+          <th>Sr No.</th>
+          <th>Patient</th>
+          <th>Contact</th>
+          <th>Date</th>
+          <th>Time</th>
+          <th class="hide-mobile">Disease</th>
+          <th>Booking Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for appointment in appointments %}
+        <tr>
+          <td>{{ forloop.counter }}</td>
+          <td>{{ appointment.patient.first_name|default:appointment.first_name }}</td>
+
+          <td>{{ appointment.contact_number }}</td>
+          <td>{{ appointment.appointment_date }}</td>
+          <td>{{ appointment.appointment_time }}</td>
+          <td class="hide-mobile">{{ appointment.diseases }}</td>
+          <td>
+              <select class="form-select form-select-sm"
+                      onchange="updateStatus({{ appointment.id }}, this.value)">
+
+                  <option value="booked"
+                    {% if appointment.visit_status == "booked" %}selected{% endif %}>
+                    Booked
+                  </option>
+
+                  <option value="visited"
+                    {% if appointment.visit_status == "visited" %}selected{% endif %}>
+                    Visited
+                  </option>
+
+                  <option value="cancelled"
+                    {% if appointment.visit_status == "cancelled" %}selected{% endif %}>
+                    Cancelled
+                  </option>
+
+                  <option value="unvisited"
+                    {% if appointment.visit_status == "unvisited" %}selected{% endif %}>
+                    Unvisited
+                  </option>
+
+              </select>
+</td>
+
+          <td>
+            <a href="{% url 'appointment_detail' appointment.id %}"
+               class="btn btn-sm btn-outline-primary rounded-pill">
+              View
+            </a>
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="9" class="text-center text-muted">
+            No appointments found
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+</div>
+
+
+<script>
+function updateStatus(id, status) {
+
+    fetch("{% url 'update_status' %}", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            "X-CSRFToken": "{{ csrf_token }}"
+        },
+        body: `id=${id}&status=${status}`
+    });
+}
+</script>
+
+{% endblock dashboard_content %}

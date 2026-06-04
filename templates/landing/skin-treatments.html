@@ -1,0 +1,531 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Mangalya Homeopathy — Skin Treatments</title>
+  <meta name="description" content="Advanced skin treatment by Dr. Sanchit Ranade. Homeopathic care for acne, pigmentation, eczema & chronic skin concerns. Contact us." />
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+</head>
+<body>
+
+ <!-- ====== SKIN LANDING PAGE CONTENT ONLY (NO NAVBAR / NO FOOTER) ====== -->
+
+<style>
+.testimonial-carousel .quote-icon {
+    font-size: 60px;
+    color: rgba(0,0,0,0.06);
+  }
+  .testimonial-carousel .quote-text {
+    font-size: 20px;
+    max-width: 760px;
+    margin: 0 auto;
+    color: #6b7a89;
+  }
+  .testimonial-carousel .quote-author {
+    color: #2c417a;
+    font-weight: 700;
+    margin-top: 12px;
+  }
+
+
+
+  :root{
+    --primary-blue: #2c417a;
+    --accent: #0b98b2;
+    --hero-bg: #f4fbfb;
+    --muted: #6b7a89;
+    --container: 1200px;
+  }
+
+  *{box-sizing:border-box;}
+
+  .container{max-width:var(--container); margin:0 auto; width:100%;}
+
+  /* HERO */
+  .hero{
+    background: var(--hero-bg);
+    padding:40px 20px 20px;
+    position: relative;
+  }
+
+  .hero-inner{
+    display:grid;
+    grid-template-columns: 1fr auto 360px;
+    gap:28px;
+    align-items:center;
+    max-width:var(--container);
+    margin:0 auto;
+    position:relative;
+  }
+
+  .hero-left{}
+  .eyebrow{color:var(--primary-blue); font-weight:700; font-size:13px;}
+  .hero-title{
+    font-size:48px;
+    line-height:1.1;
+    margin:10px 0;
+    color:var(--primary-blue);
+    font-weight:700;
+  }
+  .hero-title .accent{color:var(--accent);}
+  .hero-desc{color:var(--muted); max-width:560px; font-size:17px;}
+  .hero-quick{margin-top:10px; color:var(--muted); font-size:15px;}
+
+  .hero-image{
+    width:420px;
+    z-index:2;
+    filter: drop-shadow(0 18px 30px rgba(0,0,0,0.08));
+  }
+  .hero-image img{width:100%; object-fit:contain;}
+
+  /* CONTACT CARD */
+  .contact-card{
+    width:340px;
+    background:var(--primary-blue);
+    color:#fff;
+    padding:22px;
+    border-radius:10px;
+    position:absolute;
+    right:-20px;
+    top:50%;
+    transform:translateY(-50%);
+    box-shadow:0 18px 40px rgba(0,0,0,0.12);
+  }
+  .contact-card h3{margin:0 0 10px; font-size:18px;}
+  .form-row{margin-top:12px;}
+  .form-row input, .form-row select, .form-row textarea{
+    width:100%;
+    padding:10px;
+    border-radius:6px;
+    border:0;
+    margin-top:6px;
+  }
+  .submit{
+    width:100%;
+    background:var(--accent);
+    color:#fff;
+    padding:12px;
+    border:none;
+    border-radius:8px;
+    margin-top:14px;
+    font-weight:700;
+  }
+
+  /* SECTIONS */
+  section{padding:48px 20px;}
+  .section-title{color:var(--primary-blue); font-weight:700;}
+  .section-sub{color:var(--accent); font-weight:700; display:block;}
+
+  /* HOW SECTION */
+  .how{display:flex; gap:30px; max-width:var(--container); margin:0 auto;}
+  .how-text{flex:1;}
+  .video-thumb{width:360px; border-radius:8px; overflow:hidden; position:relative;}
+  .video-thumb img{width:100%;}
+
+  .playbtn{
+    position:absolute; left:50%; top:50%;
+    transform:translate(-50%,-50%);
+    background:rgba(0,0,0,0.45); padding:14px;
+    border-radius:50%; color:#fff;
+  }
+
+  /* GALLERY */
+  .gallery{background:#f3f4f6; padding:36px 0;}
+  .gallery-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
+    max-width:var(--container);
+    margin:0 auto;
+  }
+  .gallery-card{background:#fff; padding:8px; border-radius:6px;}
+  .gallery-card img{width:100%; height:340px; object-fit:cover;}
+
+  .testimonial{text-align:center; padding:44px 20px;}
+  .quote-icon{font-size:60px; color:rgba(0,0,0,0.06);}
+  .quote-author{color:var(--primary-blue); font-weight:700;}
+
+  @media(max-width:1200px){
+    .hero-inner{grid-template-columns:1fr auto; }
+    .contact-card{position:static; transform:none; margin-top:20px;}
+  }
+  @media(max-width:900px){
+    .hero-inner{grid-template-columns:1fr;}
+    .hero-image{width:300px; margin:0 auto;}
+    .hero-title{font-size:36px;}
+  }
+  @media(max-width:600px){
+    .hero-title{font-size:28px;}
+    .hero-image{width:220px;}
+    .gallery-grid{grid-template-columns:repeat(2,1fr);}
+  }
+
+
+
+
+
+  /* ===== Treatments / Problems section ===== */
+.treatments {
+  padding:48px 20px;
+  max-width:var(--container);
+  margin:0 auto;
+}
+.treatments .section-sub { color:var(--accent); font-weight:700; display:block; margin-bottom:8px; }
+.treatments .section-title { color:var(--primary-blue); margin-bottom:18px; font-weight:700; }
+
+.treatment-list {
+  display:flex;
+  flex-direction:column;
+  gap:36px;
+  margin-top:12px;
+}
+
+/* each item: 2-col layout, alternates with .reverse */
+.treatment-item {
+  display:grid;
+  grid-template-columns: 1fr 420px; /* text | image */
+  gap:24px;
+  align-items:center;
+  background: #fff;
+  padding:18px;
+  border-radius:10px;
+  box-shadow: 0 8px 22px rgba(44,65,122,0.04);
+}
+
+.treatment-item.reverse {
+  grid-template-columns: 420px 1fr; /* image | text */
+}
+
+/* text column */
+.treatment-item .treatment-text h4 {
+  margin:0 0 8px;
+  color:var(--primary-blue);
+  font-size:20px;
+}
+.treatment-item .treatment-text p {
+  margin:0 0 12px;
+  color:var(--muted);
+  line-height:1.6;
+}
+.treatment-features {
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px 12px;
+}
+.treatment-features .chip {
+  background:var(--hero-bg);
+  color:var(--primary-blue);
+  padding:6px 10px;
+  border-radius:18px;
+  font-size:13px;
+  font-weight:600;
+}
+
+/* image column */
+.treatment-item .treatment-img {
+  display:block;
+  width:100%;
+  max-width:420px;
+  justify-self:center;
+}
+.treatment-item .treatment-img img {
+  width:100%;
+  height:auto;
+  border-radius:8px;
+  object-fit:cover;
+  display:block;
+}
+
+/* CTA inside each card (optional) */
+.treatment-item .learn-btn {
+  display:inline-block;
+  margin-top:12px;
+  padding:8px 14px;
+  border-radius:8px;
+  background:var(--accent);
+  color:#fff;
+  font-weight:700;
+  text-decoration:none;
+}
+
+/* responsive: stack on smaller screens */
+@media (max-width:980px){
+  .treatment-item, .treatment-item.reverse {
+    grid-template-columns: 1fr;
+  }
+  .treatment-item .treatment-img { max-width:100%; margin:10px auto 0; }
+}
+
+</style>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+
+    <div class="hero-left">
+      <div class="eyebrow">SKIN TREATMENT SPECIALIST</div>
+
+      <h1 class="hero-title">
+        Skin Treatment<br>
+        <span class="accent" style="font-size: 32px;">By Dr. Sanchit Ranade</span>
+      </h1>
+
+      <p class="hero-desc">
+        Clear acne, pigmentation, eczema & chronic skin concerns with safe, gentle and effective
+        homeopathic treatment focused on long-term healing.
+      </p>
+
+      <p class="hero-quick">
+        Gold Medalist • 5+ Years Experience • 5000+ Patients Treated
+      </p>
+
+      <a href="#contact" class="submit " style="display:inline-block; width:auto; padding:12px 24px; margin-top:20px;text-decoration: none; background-color: #2c417a;">
+        Book Appointment
+      </a>
+    </div>
+
+    <div class="hero-image">
+      <img src="images/doctor.png" alt="Dr. Sanchit Ranade">
+    </div>
+
+    <!-- Contact Card -->
+    <aside class="contact-card" id="contact">
+      <h3>CONTACT US</h3>
+      <small>Get expert guidance for your skin concerns. Our team will contact you soon.</small>
+
+      <div class="form-row"><input type="text" placeholder="Name"></div>
+      <div class="form-row"><input type="tel" placeholder="Phone Number"></div>
+      <div class="form-row"><input type="email" placeholder="Email Address"></div>
+
+      <div class="form-row">
+        <select>
+          <option>Select Skin Concern</option>
+          <option>Acne / Pimples</option>
+          <option>Pigmentation</option>
+          <option>Eczema / Psoriasis</option>
+          <option>Allergy</option>
+        </select>
+      </div>
+
+      <div class="form-row"><textarea rows="3" placeholder="Message"></textarea></div>
+
+      <button class="submit">CONTACT US</button>
+    </aside>
+
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section>
+  <div class="container">
+    <span class="section-sub">LEARN HOW</span>
+    <h3 class="section-title">Everything Works!</h3>
+    <p style="color:var(--muted); max-width:700px;">
+      Treatment is customized based on your symptoms, history, triggers and skin type to ensure long-term improvement.
+    </p>
+  </div>
+
+  <div class="how">
+    <div class="how-text container">
+      <ul style="color:var(--muted); line-height:1.7;">
+        <li>Personalised case analysis</li>
+        <li>Root-cause homeopathic medicines</li>
+        <li>Progress tracking with follow-ups</li>
+      </ul>
+    </div>
+
+    <div class="video-thumb">
+      <img src="preview_.jfif" alt="Skin treatment video">
+      <div class="playbtn">▶</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ===== Treatments Section (alternating layout) ===== -->
+<section class="treatments" id="treatments-list" aria-label="Types of Skin Treatments">
+  <div>
+    <span class="section-sub">TREATMENTS</span>
+    <h3 class="section-title">Skin Problems We Treat</h3>
+    <p style="color:var(--muted); max-width:760px">
+      We provide personalised homeopathic solutions for a wide range of skin conditions. Below are the common problems we treat — click Contact Us to discuss your case.
+    </p>
+  </div>
+
+  <div class="treatment-list">
+
+    <!-- Item 1: Acne -->
+    <article class="treatment-item" id="treatment-acne" aria-labelledby="t-acne">
+      <div class="treatment-text">
+        <h2 id="t-acne">Acne & Pimples</h2>
+        <p>
+          Targeted homeopathic protocols to reduce inflammation, control breakouts, and address hormonal or dietary triggers.
+          Treatments focus on long-term balance to prevent recurrence.Targeted homeopathic protocols to reduce inflammation, control breakouts, and address hormonal or dietary triggers.
+          Treatments focus on long-term balance to prevent recurrence.
+        </p>
+        <div class="treatment-features" aria-hidden="false">
+          <span class="chip">Active Acne</span>
+          <span class="chip">Post-acne Marks</span>
+          <span class="chip">Hormonal Acne</span>
+        </div>
+        <a class="learn-btn" href="#contact">Contact Us</a>
+      </div>
+
+      <div class="treatment-img" aria-hidden="true">
+        <img src="images/acne2.jpg" alt="Acne treatment illustration or patient before/after" >
+      </div>
+    </article>
+
+    <!-- Item 2: Pigmentation (reverse layout: image left) -->
+    <article class="treatment-item reverse" id="treatment-pigmentation" aria-labelledby="t-pig">
+      <div class="treatment-img" aria-hidden="true">
+        <img src="images/pigmentation.jpg" alt="Pigmentation treatment">
+      </div>
+
+      <div class="treatment-text">
+        <h2 id="t-pig">Pigmentation & Dark Spots</h2>
+        <p>
+          Gentle protocols that target melanin imbalance and inflammation, plus lifestyle guidance to reduce recurrence and improve tone.
+        </p>
+        <div class="treatment-features">
+          <span class="chip">Melasma</span>
+          <span class="chip">Post-inflammatory</span>
+          <span class="chip">Sun Spots</span>
+        </div>
+        <a class="learn-btn" href="#contact">Contact Us</a>
+      </div>
+    </article>
+
+    <!-- Item 3: Eczema / Psoriasis -->
+    <article class="treatment-item" id="treatment-eczema" aria-labelledby="t-ecz">
+      <div class="treatment-text">
+        <h2 id="t-ecz">Eczema & Psoriasis</h2>
+        <p>
+          Management plans to reduce itching, inflammation and flare-ups — focusing on triggers, diet, and stabilising the immune response.
+        </p>
+        <div class="treatment-features">
+          <span class="chip">Itchy Rashes</span>
+          <span class="chip">Chronic Management</span>
+          <span class="chip">Child & Adult Care</span>
+        </div>
+        <a class="learn-btn" href="#contact">Contact Us</a>
+      </div>
+
+      <div class="treatment-img" aria-hidden="true">
+        <img src="images/Psoriasis.jpg" alt="Eczema psoriasis treatment">
+      </div>
+    </article>
+
+    <!-- Item 4: Fungal & Rashes (reverse) -->
+    <article class="treatment-item reverse" id="treatment-fungal" aria-labelledby="t-fun">
+      <div class="treatment-img" aria-hidden="true">
+        <img src="images/psoriasis-eczema-neck-patient.jpg" alt="Fungal skin infection treatment">
+      </div>
+
+      <div class="treatment-text">
+        <h2 id="t-fun">Fungal Infections & Rashes</h2>
+        <p>
+          Safe and effective approaches for fungal infections, ringworm, candidiasis and non-specific rashes. We combine topical care guidance with systemic support.
+        </p>
+        <div class="treatment-features">
+          <span class="chip">Ringworm</span>
+          <span class="chip">Tinea</span>
+          <span class="chip">Contact Dermatitis</span>
+        </div>
+        <a class="learn-btn" href="#contact">Contact Us</a>
+      </div>
+    </article>
+
+    <!-- Item 5: Other / General -->
+    <article class="treatment-item" id="treatment-other" aria-labelledby="t-other">
+      <div class="treatment-text">
+        <h2 id="t-other">Other Skin Concerns</h2>
+        <p>
+          From allergies and pigmentation to unexplained rashes — we assess your history and provide a treatment plan tailored to your needs.
+        </p>
+        <div class="treatment-features">
+          <span class="chip">Allergies</span>
+          <span class="chip">Scarring</span>
+          <span class="chip">Hair-related Issues</span>
+        </div>
+        <a class="learn-btn" href="#contact">Contact Us</a>
+      </div>
+
+      <div class="treatment-img" aria-hidden="true">
+        <img src="images/other.jfif" alt="General skin concerns">
+      </div>
+    </article>
+
+  </div>
+</section>
+
+
+<!-- GALLERY -->
+<section class="gallery">
+  <div class="container">
+    <span class="section-sub">VIEW OUR</span>
+    <h3 class="section-title">Before & After Gallery</h3>
+  </div>
+
+  <div class="gallery-grid container">
+    <div class="gallery-card"><img src="images/result1.jpg"></div>
+    <div class="gallery-card"><img src="images/result2.jpg"></div>
+    <div class="gallery-card"><img src="images/result1.jpg"></div>
+    <div class="gallery-card"><img src="images/result2.jpg"></div>
+  </div>
+</section>
+
+<!-- TESTIMONIAL CAROUSEL -->
+<div id="testimonialCarousel" class="carousel slide testimonial-carousel" data-bs-ride="carousel" data-bs-interval="1000">
+
+
+  <!-- Indicators -->
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="0" class="active"></button>
+    <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="1"></button>
+    <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="2"></button>
+  </div>
+
+  <div class="carousel-inner">
+
+    <!-- Slide 1 -->
+    <div class="carousel-item active text-center py-5">
+      <div class="quote-icon">“</div>
+      <p class="quote-text">
+        “The treatment completely improved my skin. Very effective and safe approach!”
+      </p>
+      <div class="quote-author">— Rohan Patil</div>
+    </div>
+
+    <!-- Slide 2 -->
+    <div class="carousel-item text-center py-5">
+      <div class="quote-icon">“</div>
+      <p class="quote-text">
+        “I had pigmentation for years. Dr. Sanchit's treatment showed visible results in just a few weeks.”
+      </p>
+      <div class="quote-author">— Neha Sharma</div>
+    </div>
+
+    <!-- Slide 3 -->
+    <div class="carousel-item text-center py-5">
+      <div class="quote-icon">“</div>
+      <p class="quote-text">
+        “Best clinic in Nalasopara. My acne reduced 80% without any side effects.”
+      </p>
+      <div class="quote-author">— Amit Verma</div>
+    </div>
+
+  </div>
+
+</div>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+
+</body>
+</html>

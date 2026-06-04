@@ -1,0 +1,421 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Book Appointment{% endblock %}
+{% block content1 %}{% endblock %}
+{% block header %}{% endblock %}
+
+{% block content2 %}
+
+<style>
+body { margin: 0 !important; padding: 0; }
+
+/* Closed full-day holiday */
+.flatpickr-day.closed-day {
+    background: #f8d7da !important;
+    color: #721c24 !important;
+    font-weight: 600;
+    border-radius: 50%;
+}
+
+/* Tooltip cursor */
+.flatpickr-day[title] { cursor: help; }
+
+/* Slots */
+.time-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.time-slot {
+    min-width: 72px;
+    padding: 6px 0;
+    font-size: 13px;
+    text-align: center;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid #cfd8ff;
+    background: #e7f1ff;
+    color: #1b4332;
+}
+
+.time-slot:hover,
+.time-slot.selected {
+    background: #2d6a4f;
+    color: #fff;
+}
+
+.time-slot.booked {
+    background: #f8d7da;
+    color: #842029;
+    border-color: #f5c2c7;
+    cursor: not-allowed;
+}
+
+.time-slot.past { display: none; }
+#time-slots-wrapper { display: none; }
+
+.slot-legend {
+    font-size: 12px;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-weight: 600;
+}
+
+.legend-item.available { color: #2d6a4f; }
+.legend-item.booked { color: #842029; }
+</style>
+
+<div class="container-fluid p-0">
+<div class="row no-gutters h-100">
+
+<!-- LEFT -->
+<div class="col-md-4 d-none d-md-block"
+     style="background:#0b98b2;color:#fff;position:fixed;top:0;bottom:0;">
+    <div class="text-center" style="position:absolute;top:50%;transform:translateY(-50%);width:100%;">
+        <h5 class="fw-bold mb-4">Welcome</h5>
+        <img src="{% static 'images/appointment.png' %}" width="50%">
+        <p class="text-muted">Book your appointment quickly and easily.</p>
+    </div>
+</div>
+
+<!-- RIGHT -->
+<div class="col-md-8 offset-md-4" style="height:100vh;overflow-y:auto;">
+<div class="card p-4 border-0">
+
+<h3 class="text-center fw-bold mb-4">Book Appointment</h3>
+
+<form method="post" action="{% url 'book_appointment' %}">
+{% csrf_token %}
+<div class="mb-3">
+
+    <label class="mb-1 fw-semibold">
+        Case Type
+    </label>
+
+    <select class="form-control rounded-pill"
+            name="patientType"
+            required>
+
+        <option value="">Select Case Type</option>
+
+        <option value="new">
+            New Patient
+        </option>
+
+        <option value="existing">
+            Follow-up
+        </option>
+
+    </select>
+
+</div>
+
+
+<!--<input type="hidden" name="patientType" value="new">-->
+<input type="hidden" name="appointment_time" id="appointment_time">
+
+<div class="row mb-3">
+    <div class="col-md-6 mb-3 mb-md-0">
+        <input type="text"
+       class="form-control rounded-pill"
+       name="firstName"
+       placeholder="First Name"
+       pattern="[A-Za-z ]+"
+       title="Only letters allowed"
+       required>
+    </div>
+    <div class="col-md-6">
+        <input type="text"
+       class="form-control rounded-pill"
+       name="lastName"
+       placeholder="Last Name"
+       pattern="[A-Za-z ]+"
+       title="Only letters allowed"
+       required>
+    </div>
+</div>
+
+<input type="email"
+       class="form-control rounded-pill mb-3"
+       name="email"
+       placeholder="Enter valid email"
+       required>
+
+<input type="tel"
+       class="form-control rounded-pill mb-3"
+       name="contactNumber"
+       pattern="[0-9]{10}"
+       maxlength="10"
+       placeholder="10 digit mobile number"
+       required>
+
+<input type="number"
+       class="form-control rounded-pill mb-3"
+       name="age"
+       min="1"
+       max="100"
+       placeholder="Age"
+       required>
+
+<input id="appointment_date"
+       class="form-control rounded-pill mb-3"
+       name="appointment_date"
+       placeholder="Choose date"
+       required>
+
+<div id="slot-hint" class="text-muted mt-3">
+📅 Please select a date to view available time slots
+</div>
+
+<div id="time-slots-wrapper" class="mt-3">
+    <h6 class="fw-bold mb-2">Available Slots</h6>
+    <div class="time-grid" id="time-slots"></div>
+
+    <div class="slot-legend mt-2">
+        <span class="legend-item available">● Available</span>
+        <span class="legend-item booked">● Booked</span>
+    </div>
+</div>
+
+<select class="form-control rounded-pill mt-3"
+        name="diseases"
+        required>
+
+    <option value="">Select Disease</option>
+
+    <option value="Acidity">Acidity</option>
+    <option value="Allergy">Allergy</option>
+    <option value="Anxiety">Anxiety</option>
+    <option value="Arthritis">Arthritis</option>
+    <option value="Asthma">Asthma</option>
+    <option value="Back Pain">Back Pain</option>
+    <option value="BP">BP</option>
+    <option value="Bronchitis">Bronchitis</option>
+    <option value="Child Health">Child Health</option>
+    <option value="Cold & Cough">Cold & Cough</option>
+    <option value="Constipation">Constipation</option>
+    <option value="Depression">Depression</option>
+    <option value="Diabetes">Diabetes</option>
+    <option value="Digestive Issues">Digestive Issues</option>
+    <option value="Ear Problem">Ear Problem</option>
+    <option value="Eczema">Eczema</option>
+    <option value="Eye Problem">Eye Problem</option>
+    <option value="Fatty Liver">Fatty Liver</option>
+    <option value="Fever">Fever</option>
+    <option value="Fungal Infection">Fungal Infection</option>
+    <option value="Gall Bladder Stone">Gall Bladder Stone</option>
+    <option value="Gastric Problem">Gastric Problem</option>
+    <option value="Hair Fall">Hair Fall</option>
+    <option value="Headache">Headache</option>
+    <option value="Height Gain">Height Gain</option>
+    <option value="Joint Pain">Joint Pain</option>
+    <option value="Kidney Stone">Kidney Stone</option>
+    <option value="Knee Pain">Knee Pain</option>
+    <option value="Menstrual Problems">Menstrual Problems</option>
+    <option value="Migraine">Migraine</option>
+    <option value="PCOD">PCOD</option>
+    <option value="Piles">Piles</option>
+    <option value="Psoriasis">Psoriasis</option>
+    <option value="Sciatica">Sciatica</option>
+    <option value="Sinus">Sinus</option>
+    <option value="Skin">Skin</option>
+    <option value="Sleep Issues">Sleep Issues</option>
+    <option value="Speech Problem">Speech Problem</option>
+    <option value="Stress">Stress</option>
+    <option value="Thyroid">Thyroid</option>
+    <option value="Urinary Infection">Urinary Infection</option>
+    <option value="Urine Problem">Urine Problem</option>
+    <option value="Vertigo">Vertigo</option>
+    <option value="Weakness">Weakness</option>
+    <option value="Weight Gain">Weight Gain</option>
+    <option value="Women Health">Women Health</option>
+
+    <option value="Other">Other</option>
+
+</select>
+
+<div class="text-center mt-4">
+<button class="btn custom-btn rounded-pill px-5" type="submit">
+Book Appointment
+</button>
+</div>
+
+</form>
+</div>
+</div>
+</div>
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+<script>
+let HOLIDAYS = {};
+
+const HOLIDAY_LABELS = {
+    full: "Clinic Closed (Full Day)",
+    morning: "Clinic Closed (Morning)",
+    evening: "Clinic Closed (Evening)"
+};
+
+function localDate(d) {
+    return d.getFullYear() + "-" +
+           String(d.getMonth()+1).padStart(2,"0") + "-" +
+           String(d.getDate()).padStart(2,"0");
+}
+
+function generateSlots(booked=[], closedSlots=[]) {
+    document.getElementById("slot-hint").style.display="none";
+    document.getElementById("time-slots-wrapper").style.display="block";
+
+    const box = document.getElementById("time-slots");
+    const hidden = document.getElementById("appointment_time");
+    box.innerHTML="";
+    hidden.value="";
+
+    const dateStr = document.getElementById("appointment_date").value;
+    const d = new Date(dateStr);
+    const isSunday = d.getDay()===0;
+    const isToday = dateStr === localDate(new Date());
+
+    function format(t){
+        let h=t.getHours(), m=String(t.getMinutes()).padStart(2,"0");
+        return `${h%12||12}:${m} ${h>=12?"PM":"AM"}`;
+    }
+
+    function addSlots(start,end){
+        let t=new Date(dateStr); t.setHours(start,0,0,0);
+        let e=new Date(dateStr); e.setHours(end,0,0,0);
+
+        while(t<=e){
+            const val=t.toTimeString().slice(0,5);
+            const div=document.createElement("div");
+            div.className="time-slot";
+            div.textContent=format(t);
+
+            if(isToday && t<=new Date()) div.classList.add("past");
+            if(booked.includes(val)) div.classList.add("booked");
+
+            if(!div.classList.contains("booked") && !div.classList.contains("past")){
+                div.onclick=()=>{
+                    document.querySelectorAll(".time-slot").forEach(x=>x.classList.remove("selected"));
+                    div.classList.add("selected");
+                    hidden.value=val;
+                }
+            }
+            box.appendChild(div);
+            t.setMinutes(t.getMinutes()+15);
+        }
+    }
+
+    if(isSunday){
+        if(!closedSlots.includes("morning")) addSlots(12,14);
+    } else {
+        if(!closedSlots.includes("morning")) addSlots(9,14);
+        if(!closedSlots.includes("evening")) addSlots(19,21);
+    }
+}
+
+fetch("/get-holidays/")
+.then(r=>r.json())
+.then(data=>{
+    HOLIDAYS=data.holidays||{};
+
+    flatpickr("#appointment_date",{
+        minDate:"today",
+        dateFormat:"Y-m-d",
+
+        disable: [
+              d => {
+                const key = localDate(d);
+                return HOLIDAYS[key]?.some(x => x.slot === "full");
+              }
+            ],
+
+        onChange(_,dateStr){
+            fetch(`/get-booked-slots/?date=${dateStr}`)
+            .then(r=>r.json())
+            .then(b=>{
+                generateSlots(
+                      b.slots || [],
+                      (HOLIDAYS[dateStr] || []).map(x => x.slot)
+                    );
+                                });
+        },
+
+        onDayCreate(_,__,___,el){
+            const key = localDate(el.dateObj);
+            if(!HOLIDAYS[key]) return;
+
+            const holidayData = HOLIDAYS[key];
+
+            // Check full day closed
+            if(holidayData.some(x => x.slot === "full")){
+                el.classList.add("closed-day");
+            }
+
+            // ✅ SHOW FESTIVAL NAME
+            const titleText = holidayData.map(x => x.title).filter(Boolean).join(", ");
+
+            if(titleText){
+                const span = document.createElement("span");
+
+                    span.style.fontSize = "7px";          // slightly bigger
+                    span.style.display = "block";
+                    span.style.lineHeight = "1.1";
+                    span.style.marginTop = "2px";
+                    span.style.color = "#721c24";
+                    span.style.fontWeight = "600";
+                    span.style.whiteSpace = "nowrap";     // ✅ prevent breaking
+                    span.style.overflow = "hidden";
+                    span.style.textOverflow = "ellipsis"; // ✅ if long text
+
+                    span.innerText = titleText;
+
+                    el.appendChild(span);
+            }
+}
+    });
+});
+</script>
+
+<!-- ✅ SINGLE SUBMIT HANDLER -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const form = document.querySelector("form");
+    const submitBtn = form.querySelector("button[type='submit']");
+    const timeInput = document.getElementById("appointment_time");
+
+    let submitted = false;
+
+    form.addEventListener("submit", function (e) {
+        if (!timeInput.value) {
+            e.preventDefault();
+            alert("Please select an appointment time slot");
+            return false;
+        }
+
+        if (submitted) {
+            e.preventDefault();
+            return false;
+        }
+
+        submitted = true;
+        submitBtn.disabled = true;
+        submitBtn.innerText = "Booking...";
+    });
+});
+</script>
+
+{% endblock %}
+{% block footer %}{% endblock %}

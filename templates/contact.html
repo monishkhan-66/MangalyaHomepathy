@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Contact Mangalya Homeopathy{% endblock title %}
+
+{% block content2 %}
+
+
+<div class="container contact-container">
+
+    {% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+
+        <div class="row">
+            <!-- Left Side: Contact Info -->
+            <div class="col-md-6">
+                <div class="contact-info">
+                 <img src = "{% static 'images/contact2.png' %}" class="img-fluid"/>
+
+                </div>
+            </div>
+
+            <!-- Right Side: Contact Form -->
+            <div class="col-md-6">
+                <div class="contact-form">
+                    <form method="POST" action="{% url 'contact' %}">
+    {% csrf_token %}
+
+    <div class="mb-3">
+        <input type="text" name="name" class="form-control custom-input"
+               placeholder="Full Name" required>
+    </div>
+
+    <div class="mb-3">
+        <input type="email" name="email" class="form-control custom-input"
+               placeholder="Email" required>
+    </div>
+
+    <div class="mb-3">
+        <input type="tel" name="phone" class="form-control custom-input"
+               placeholder="Phone No." required>
+    </div>
+
+    <div class="mb-3">
+        <textarea name="message" class="form-control custom-input"
+                  rows="4" placeholder="Write your message" required></textarea>
+    </div>
+
+    <button type="submit" class="btn custom-btn">Send Message</button>
+</form>
+
+                </div>
+            </div>
+        </div>
+
+
+           <!-- New Row: Get in Touch Section with Animations -->
+    <div class="row get-in-touch mt-5 text-center">
+        <h3 class="animated fadeInUp">Get in Touch</h3>
+
+        <!-- Phone -->
+        <div class="col-md-3">
+            <div class="contact-box animated fadeInLeft">
+                <i class="fas fa-phone-alt fa-2x"></i>
+                <h5>Phone</h5>
+                <p>+91 70207 24751</p>
+            </div>
+        </div>
+
+        <!-- Email -->
+        <div class="col-md-3">
+            <div class="contact-box animated fadeInUp">
+               <i class="fas fa-clock fa-2x"></i>
+                <p><strong>Monday - Saturday:</strong></p>
+                    <ul style="list-style: none; padding: 0;">
+                        <li>🕘 Morning: 9 AM - 2 PM</li>
+                        <li>🌙 Evening: 7 PM - 10 PM</li>
+                    </ul>
+                    <p><strong>Sunday:</strong> 12 PM - 2 PM</p>
+            </div>
+        </div>
+
+        <!-- Address -->
+        <div class="col-md-3">
+            <div class="contact-box animated fadeInUp">
+                <i class="fas fa-map-marker-alt fa-2x"></i>
+                <h5>Address</h5>
+                <p>Shop no 44, civic centre, Station Rd, Apna Nagar, Sriprastha, Nalasopara West, Nala Sopara, Maharashtra 401203</p>
+            </div>
+        </div>
+
+        <!-- Clinic Timing -->
+        <div class="col-md-3">
+            <div class="contact-box animated fadeInRight">
+                 <i class="fas fa-envelope fa-2x"></i>
+                <h5>Email</h5>
+                <p>info@manglayahomeopathy.com</p>
+            </div>
+        </div>
+    </div>
+
+
+
+    </div>
+
+
+
+{% endblock content2 %}
+
+

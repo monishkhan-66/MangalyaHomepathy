@@ -1,0 +1,150 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Appointment Details{% endblock title %}
+{% block header %}{% endblock header %}
+
+{% block content2 %}
+
+<style>
+/* ================= APPOINTMENT DETAIL – PAGE ONLY ================= */
+
+:root {
+  --mangalya-primary: #2cbcac;
+  --mangalya-secondary: #2c447c;
+  --mangalya-gold: #c9a23f;
+  --mangalya-soft: #eefaf8;
+}
+
+/* Main card */
+.detail-card {
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 10px 28px rgba(0,0,0,0.08);
+  border-top: 5px solid var(--mangalya-primary);
+}
+
+/* Header */
+.detail-header {
+  background: linear-gradient(135deg, var(--mangalya-primary), var(--mangalya-secondary));
+  color: #fff;
+  border-radius: 14px 14px 0 0;
+  padding: 18px;
+  text-align: center;
+}
+
+/* Section titles */
+.section-title {
+  color: var(--mangalya-secondary);
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+/* Info boxes */
+.info-box {
+  background: var(--mangalya-soft);
+  border-radius: 14px;
+  padding: 18px;
+}
+
+.info-box p {
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+}
+
+/* Icons */
+.info-box i {
+  color: var(--mangalya-primary);
+  margin-right: 6px;
+}
+
+/* Badges */
+.badge-new {
+  background-color: var(--mangalya-primary);
+  color: #fff;
+}
+
+.badge-existing {
+  background-color: var(--mangalya-secondary);
+  color: #fff;
+}
+
+/* Back button */
+.back-btn {
+  border-radius: 30px;
+  padding: 8px 26px;
+  font-weight: 600;
+}
+
+.back-btn:hover {
+  background-color: var(--mangalya-secondary);
+  color: #fff;
+}
+</style>
+
+<div class="container" style="margin-top:-60px">
+  <div class="d-flex justify-content-center">
+    <div class="detail-card p-4" style="max-width: 900px; width: 100%;">
+
+      <!-- HEADER -->
+      <div class="detail-header mb-4">
+        <h3 class="mb-0">
+          <i class="fa-solid fa-calendar-check"></i> Appointment Details
+        </h3>
+      </div>
+
+      <!-- PATIENT INFO -->
+      <h5 class="section-title">
+        <i class="fa-solid fa-user"></i> Patient Information
+      </h5>
+
+      <div class="info-box mb-4">
+        <p>
+          <strong><i class="fa-solid fa-user"></i> Name:</strong>
+          {% if appointment.patient %}
+            {{ appointment.patient.first_name }} {{ appointment.patient.last_name }}
+          {% else %}
+            {{ appointment.first_name }} {{ appointment.last_name }}
+          {% endif %}
+        </p>
+        <p><strong><i class="fa-solid fa-envelope"></i> Email:</strong> {{ appointment.email }}</p>
+        <p><strong><i class="fa-solid fa-phone"></i> Contact:</strong> {{ appointment.contact_number }}</p>
+        <p><strong><i class="fa-solid fa-cake-candles"></i> Age:</strong> {{ appointment.age }}</p>
+      </div>
+
+      <!-- APPOINTMENT INFO -->
+      <h5 class="section-title">
+        <i class="fa-solid fa-notes-medical"></i> Appointment Information
+      </h5>
+
+      <div class="info-box">
+        <p><strong><i class="fa-solid fa-id-card"></i> Booking ID:</strong> {{ appointment.id }}</p>
+        <p><strong><i class="fa-solid fa-calendar-days"></i> Date:</strong> {{ appointment.appointment_date }}</p>
+        <p><strong><i class="fa-solid fa-clock"></i> Time:</strong> {{ appointment.appointment_time }}</p>
+        <p><strong><i class="fa-solid fa-stethoscope"></i> Disease / Symptoms:</strong> {{ appointment.diseases }}</p>
+        <p>
+          <strong><i class="fa-solid fa-user-doctor"></i> Patient Type:</strong>
+          {% if appointment.patient_type == 'new' %}
+            <span class="badge badge-new rounded-pill px-3">New</span>
+          {% else %}
+            <span class="badge badge-existing rounded-pill px-3">Existing</span>
+          {% endif %}
+        </p>
+      </div>
+
+      <!-- BACK BUTTON -->
+      <div class="text-center mt-4">
+        <a href="{% url 'appointments' %}" class="btn btn-light border back-btn">
+          <i class="fa-solid fa-arrow-left"></i> Back to Appointments
+        </a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- FontAwesome Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+{% endblock content2 %}
+{% block footer %}{% endblock footer %}

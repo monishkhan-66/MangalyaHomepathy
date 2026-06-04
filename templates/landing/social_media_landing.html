@@ -1,0 +1,215 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ landing.title|default:"Mangalya Homeopathy" }} | Mangalya Homeopathy{% endblock %}
+
+{% block extra_head %}
+  <meta property="og:title" content="{{ landing.title }}" />
+  <meta property="og:description" content="{{ landing.subtitle|default:landing.description|truncatechars:160 }}" />
+  <meta property="og:image" content="{{ image_url|default:'' }}" />
+  <meta property="og:url" content="{{ page_url|default:'' }}" />
+{% endblock extra_head %}
+
+{% block content1 %}
+<section class="py-5" style="background:#f2f6f8;">
+  <div class="container">
+    <div class="row align-items-center">
+      <!-- Left: Text -->
+      <div class="col-lg-7">
+        <h2 class="text-uppercase" style="color:#2c447c; font-weight:700;">{{ landing.title|default:"Dealing with Hair Loss?" }}</h2>
+        <h5 class="text-danger mt-1">{{ landing.subtitle }}</h5>
+        <p class="mt-3 text-muted">{{ landing.description }}</p>
+
+        <div class="mt-3">
+          {% if landing.cta_url %}
+            <a href="{{ landing.cta_url }}" target="_blank" class="btn btn-primary btn-lg me-2">{{ landing.cta_text|default:"Free Consultation" }}</a>
+          {% else %}
+            <button class="btn btn-primary btn-lg me-2" data-bs-toggle="modal" data-bs-target="#bookingModal">{{ landing.cta_text|default:"Book Appointment" }}</button>
+          {% endif %}
+          {% if landing.whatsapp_number %}
+            <a class="btn btn-outline-success btn-lg" href="https://wa.me/{{ landing.whatsapp_number }}?text={{ landing.whatsapp_message|default:landing.title|urlencode }}" target="_blank">WhatsApp</a>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- Right: Contact card (no images) -->
+      <div class="col-lg-5">
+        <div class="card shadow-sm border-0" style="background:#0e5a87; color:#fff;">
+          <div class="card-body p-4">
+            <h5 class="card-title text-uppercase">Contact Us</h5>
+            <p class="small text-white-50">Contact us today so we can end your hair loss worries.</p>
+
+            <form id="heroContactForm" method="post" action="{% url 'landing:hero_contact_submit' landing.slug %}">
+              {% csrf_token %}
+              <div class="mb-2"><input name="name" class="form-control" placeholder="Name" required></div>
+              <div class="mb-2"><input name="phone" class="form-control" placeholder="Phone Number" required></div>
+              <div class="mb-2"><input name="email" type="email" class="form-control" placeholder="Email (optional)"></div>
+              <div class="mb-2"><textarea name="message" class="form-control" rows="3" placeholder="Message (optional)"></textarea></div>
+              <div class="d-grid mt-2"><button class="btn btn-danger btn-lg" type="submit">Submit Form</button></div>
+            </form>
+
+            {% if landing.phone %}
+              <p class="small text-white-50 mt-3 mb-0">Or call: <a href="tel:{{ landing.phone }}" class="text-white">{{ landing.phone }}</a></p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Optional hero image row (only if hero_image exists) -->
+    {% if landing.hero_image %}
+      <div class="row mt-4">
+        <div class="col-12 text-center">
+          <img src="{{ landing.hero_image.url }}" alt="{{ landing.title }}" class="img-fluid rounded" style="max-height:420px; width:auto;">
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</section>
+{% endblock content1 %}
+
+{% block content2 %}
+<!-- Video + Text: only render if video exists or description present -->
+<section class="py-5">
+  <div class="container">
+    <div class="row align-items-center gx-5">
+      <div class="col-md-6">
+        <h3 style="color:#2c447c;">{{ landing.video_title|default:"Learn how everything works" }}</h3>
+        <p class="text-muted">{{ landing.video_description }}</p>
+      </div>
+      <div class="col-md-6">
+        {% if landing.video %}
+          <div class="ratio ratio-16x9">
+            <video controls style="width:100%; height:100%;">
+              <source src="{{ landing.video.url }}" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        {% elif landing.hero_image %}
+          {# show hero image here only if video missing and hero_image exists (optional) #}
+          <img src="{{ landing.hero_image.url }}" alt="{{ landing.title }}" class="img-fluid rounded">
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Gallery: only include images that exist on the model (we show result_image if present) -->
+<section class="py-5" style="background:#f8f9fa;">
+  <div class="container">
+    <h4 style="color:#2c447c;">{{ landing.result_title|default:"Before & After Gallery" }}</h4>
+    <div class="row g-3 mt-3">
+      {% if landing.result_image %}
+        <div class="col-12 col-md-4">
+          <img src="{{ landing.result_image.url }}" class="img-fluid rounded" alt="result">
+        </div>
+      {% endif %}
+      {# If you want to show more images later, extend model with multiple image fields or a related model #}
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section class="py-5">
+  <div class="container">
+    <h4 class="mb-4">What Patients Say</h4>
+    <div class="row">
+
+      {% if landing.testimonial_1_review %}
+      <div class="col-md-4 mb-3">
+        <div class="card p-3 h-100">
+          <p class="mb-2">"{{ landing.testimonial_1_review }}"</p>
+          <p class="text-muted mb-0">— {{ landing.testimonial_1_name }}</p>
+        </div>
+      </div>
+      {% endif %}
+
+      {% if landing.testimonial_2_review %}
+      <div class="col-md-4 mb-3">
+        <div class="card p-3 h-100">
+          <p class="mb-2">"{{ landing.testimonial_2_review }}"</p>
+          <p class="text-muted mb-0">— {{ landing.testimonial_2_name }}</p>
+        </div>
+      </div>
+      {% endif %}
+
+      {% if landing.testimonial_3_review %}
+      <div class="col-md-4 mb-3">
+        <div class="card p-3 h-100">
+          <p class="mb-2">"{{ landing.testimonial_3_review }}"</p>
+          <p class="text-muted mb-0">— {{ landing.testimonial_3_name }}</p>
+        </div>
+      </div>
+      {% endif %}
+
+      {% if not landing.testimonial_1_review and not landing.testimonial_2_review and not landing.testimonial_3_review %}
+      <div class="col-md-12 text-muted">No testimonials added yet.</div>
+      {% endif %}
+
+    </div>
+  </div>
+</section>
+
+{% endblock content2 %}
+
+{% block extra_modals %}
+<div class="modal fade" id="bookingModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header"><h5 class="modal-title">Book an Appointment</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+      <div class="modal-body">
+        <form id="bookingForm">
+          {% csrf_token %}
+          <div class="mb-2"><label class="form-label">Full name</label><input id="lead_name" class="form-control" required></div>
+          <div class="mb-2"><label class="form-label">Phone</label><input id="lead_phone" class="form-control" required></div>
+          <div class="mb-2"><label class="form-label">Email (optional)</label><input id="lead_email" type="email" class="form-control"></div>
+          <div class="mb-2"><label class="form-label">Preferred date/time</label><input id="lead_date" class="form-control"></div>
+          <div class="mb-2"><label class="form-label">Message</label><textarea id="lead_message" class="form-control" rows="3"></textarea></div>
+          <input type="hidden" id="landing_slug" value="{{ landing.slug }}">
+          <div class="d-grid"><button id="bookingSubmit" class="btn btn-primary mt-2" type="submit">Request Appointment</button></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock extra_modals %}
+
+{% block extra_scripts %}
+<script>
+(function(){
+  const form = document.getElementById('bookingForm');
+  const create_booking_url = "{{ create_booking_url|default:'#' }}";
+  if (!form) return;
+  form.addEventListener('submit', async function(e){
+    e.preventDefault();
+    if (create_booking_url === '#') { alert('Booking endpoint not configured.'); return; }
+    const data = {
+      name: document.getElementById('lead_name').value.trim(),
+      phone: document.getElementById('lead_phone').value.trim(),
+      email: document.getElementById('lead_email').value.trim(),
+      preferred_date: document.getElementById('lead_date').value.trim(),
+      message: document.getElementById('lead_message').value.trim(),
+      landing_slug: document.getElementById('landing_slug').value || ''
+    };
+    const csrftoken = (document.cookie.match(/(^|;)\s*csrftoken=([^;]+)/) || [])[2];
+    const btn = document.getElementById('bookingSubmit'); btn.disabled=true; btn.textContent='Sending...';
+    try {
+      const resp = await fetch(create_booking_url, {
+        method:'POST',
+        headers:{ 'Content-Type':'application/json', 'X-CSRFToken': csrftoken },
+        body: JSON.stringify(data)
+      });
+      const result = await resp.json();
+      if (resp.ok && result.success) {
+        bootstrap.Modal.getInstance(document.getElementById('bookingModal')).hide();
+        alert(result.message || 'Thanks — we will contact you soon.');
+      } else {
+        alert(result.error || 'Try again later');
+      }
+    } catch (err) {
+      alert('Network error');
+    } finally { btn.disabled=false; btn.textContent='Request Appointment'; }
+  });
+})();
+</script>
+{% endblock extra_scripts %}

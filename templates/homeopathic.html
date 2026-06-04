@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}What is Homeopathy?{% endblock title %}
+
+{% block content2 %}
+
+<div class="container py-4">
+    <!-- Introduction Section -->
+    <div class="row">
+        <div class="col-12 text-center">
+            <h2 class="fs-1">What is Homeopathy?</h2>
+            <p class="lead text-muted">
+                (Homeo - similar & pathos - suffering)
+            </p>
+            <p class="text-muted">
+                Homeopathy is a system of medicine discovered by German Physician Dr. Samuel Hahnemann in 1796 based on the principle of "Similia similibus curentur" – "Like cures like." This means any substance that has the ability to produce a certain set of symptoms in a healthy individual can cure the same set of symptoms in a diseased individual.
+            </p>
+            <img src="{% static 'images/intro-homeopathic.jpg' %}" alt="Homeopathy Introduction" class="img-fluid mb-4">
+        </div>
+    </div>
+
+    <!-- Discovery of Homeopathy Section -->
+    <div class="row mt-5">
+        <div class="col-md-8">
+            <h3>Discovery of Homeopathy</h3>
+            <p class="text-muted">
+                While translating a medical text by William Cullen, Dr. Hahnemann became skeptical of the theory that cinchona bark cured malaria simply because it was bitter. He decided to test this theory by ingesting the cinchona bark himself. He experienced fever, shivering, and joint pain—symptoms similar to those of malaria itself. This led him to the principle of "Like cures like."
+            </p>
+        </div>
+        <div class="col-md-4">
+            <img src="{% static 'images/samual-hahnemann.jpg' %}" alt="Discovery of Homeopathy" class="img-fluid" style="max-width:300px;border-radius:10px">
+        </div>
+    </div>
+
+    <!-- Concepts of Homeopathy Section -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <h3>Concepts of Homeopathy</h3>
+            <p class="text-muted">
+                Homeopathy is based on several key principles:
+            </p>
+            <ul>
+                <li><strong>Law of Similars</strong>: The principle that a substance causing symptoms in a healthy person can treat the same symptoms in a sick person.</li>
+                <li><strong>Holistic Approach</strong>: Homeopathy treats the whole person, not just the disease or its symptoms.</li>
+                <li><strong>Individualistic Approach</strong>: Treatment is based on the unique symptoms and constitution of each patient, even if they have the same disease.</li>
+                <li><strong>Vital Force</strong>: The belief that a dynamic force regulates the body's functions, and when it is deranged, illness occurs. Homeopathic remedies aim to restore harmony in the body.</li>
+            </ul>
+            <img src="{% static 'images/homeopathy-concepts.jpg' %}" alt="Concepts of Homeopathy" class="img-fluid mb-4">
+        </div>
+    </div>
+
+    <!-- Miasms Section -->
+    <div class="row mt-5">
+        <div class="col-md-6">
+            <h3>Miasms</h3>
+            <p class="text-muted">
+                The word "miasm" comes from the Greek word meaning "taint" or "pollution." Hahnemann identified three main miasms: Psora, Sycosis, and Syphilis. These miasms act as the root cause for several chronic diseases.
+            </p>
+        </div>
+        <div class="col-md-6">
+            <img src="{% static 'images/miasms.jpg' %}" alt="Miasms" class="img-fluid">
+        </div>
+    </div>
+
+    <!-- Drug Proving Section -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <h3>Drug Proving</h3>
+            <p class="text-muted">
+                In homeopathy, the drug proving concept involves testing substances on healthy individuals to determine their effects. These effects are documented to create a "Drug Picture" that is used to treat similar symptoms in patients.
+            </p>
+            <img src="{% static 'images/drug-proving.jpg' %}" alt="Drug Proving" class="img-fluid mb-4">
+        </div>
+    </div>
+
+    <!-- Preparation of Medicines Section -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <h3>Preparation of Medicines</h3>
+            <p class="text-muted">
+                Homeopathic medicines are prepared using natural substances, including plants, minerals, and animal products, through a process called potentization. This process involves two steps: trituration (grinding) and succussion (vigorous shaking). These steps increase the potency of the remedy with each dilution.
+            </p>
+            <img src="{% static 'images/preparation-medicines.jpg' %}" alt="Preparation of Medicines" class="img-fluid mb-4">
+        </div>
+    </div>
+
+    <!-- Scope of Homeopathy Section -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <h3>Scope of Homeopathy</h3>
+            <p class="text-muted">
+                Homeopathy offers a wide range of treatments for both chronic and surgical diseases with minimal to no side effects. It is safe for use during pregnancy, for children, and even pets.
+            </p>
+            <h4>Chronic Diseases Treated:</h4>
+            <ul>
+                <li>Allergies (respiratory, skin, food)</li>
+                <li>Asthma, Bronchitis, Sinusitis</li>
+                <li>Diabetes, High Blood Pressure</li>
+                <li>Skin Diseases (Psoriasis, Eczema)</li>
+                <li>Chronic Migraine</li>
+                <li>Osteoarthritis, Rheumatoid Arthritis</li>
+            </ul>
+            <h4>Surgical Diseases Treated:</h4>
+            <ul>
+                <li>Renal Calculi (Kidney Stones)</li>
+                <li>Gall Bladder Calculi</li>
+                <li>Prostate Enlargement</li>
+                <li>Piles, Fissures, Fistulas</li>
+            </ul>
+            <img src="{% static 'images/scope-homeopathy.jpg' %}" alt="Scope of Homeopathy" class="img-fluid mb-4">
+        </div>
+    </div>
+
+    <!-- Famous Quotes About Homeopathy Section -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <h3>Famous Quotes About Homeopathy</h3>
+            <blockquote class="blockquote text-center">
+                <p>"Homeopathy is the safest and most reliable approach to both acute and chronic conditions." - Dr. Edward Bach</p>
+            </blockquote>
+            <blockquote class="blockquote text-center">
+                <p>"The highest ideal of cure is the speedy, gentle, and enduring restoration of health by the most trustworthy and least harmful way." - Dr. Samuel Hahnemann</p>
+            </blockquote>
+            <img src="{% static 'images/quotes-homeopathy.jpg' %}" alt="Famous Quotes About Homeopathy" class="img-fluid mb-4">
+        </div>
+    </div>
+
+</div>
+
+{% endblock content2 %}

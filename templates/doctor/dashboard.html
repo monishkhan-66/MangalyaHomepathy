@@ -1,0 +1,35 @@
+{% extends "dashboard.html" %}
+{% block dashboard_content %}
+
+<h4>Doctor Dashboard</h4>
+
+<div class="row mb-3">
+  <div class="col">Today: {{ today_total }}</div>
+  <div class="col">Waiting: {{ waiting_today }}</div>
+  <div class="col">Visited: {{ visited_today }}</div>
+  <div class="col">Cancelled: {{ cancelled_today }}</div>
+</div>
+
+<table class="table">
+<tr>
+<th>Time</th>
+<th>Patient</th>
+<th>Status</th>
+<th></th>
+</tr>
+
+{% for a in appointments %}
+<tr>
+<td>{{ a.appointment_time }}</td>
+<td>{{ a.first_name }} {{ a.last_name }}</td>
+<td>{{ a.visit_status }}</td>
+<td>
+<a href="{% url 'appointment_detail' a.id %}">
+View
+</a>
+</td>
+</tr>
+{% endfor %}
+</table>
+
+{% endblock %}
